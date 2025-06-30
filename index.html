@@ -12,6 +12,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #0d1117; /* Even darker background for matrix effect */
             display: flex;
+            flex-direction: column; /* Changed to column to put visits at bottom */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -70,37 +71,11 @@
             z-index: 1;
             position: relative;
             backdrop-filter: blur(3px); /* Subtle blur behind card for effect */
-        }
-
-        .profile-card {
-            margin-bottom: 2.5rem; /* More space between cards */
+            margin-bottom: 2.5rem; /* Added margin for spacing between cards */
         }
 
         .links-card {
             margin-top: 2.5rem; /* Space above links card */
-        }
-
-        .profile-pic-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-
-        .profile-pic-container img {
-            border: 4px solid #00ff00; /* Green border for profile pic */
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); /* Stronger green glow around profile pic */
-        }
-
-        .status-dot {
-            width: 15px; /* Slightly larger dot */
-            height: 15px;
-            background-color: #4CAF50; /* Green for online */
-            border-radius: 50%;
-            border: 3px solid #1c212a; /* Match card background */
-            position: absolute;
-            bottom: -5px; /* Adjust position */
-            right: -5px; /* Adjust position */
-            box-shadow: 0 0 0 4px #1c212a, 0 0 10px rgba(76, 175, 80, 0.8); /* Stronger dot outline and glow */
         }
 
         .glitch {
@@ -149,12 +124,6 @@
             }
         }
 
-        .profile-info h1 {
-            font-family: 'Roboto Mono', monospace; /* Username is also monospace */
-            color: #00ff00; /* Bright green for username */
-            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Glow for username */
-        }
-
         .stat-number {
             font-family: 'Roboto Mono', monospace; /* Stats numbers are monospace */
             font-size: 2.8rem; /* Even larger font for numbers */
@@ -201,6 +170,28 @@
             text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Cyan glow for icons */
         }
 
+        .visits-section {
+            margin-top: auto; /* Pushes it to the bottom */
+            text-align: center;
+            padding-top: 2rem;
+            z-index: 1; /* Keep it above background effects */
+            color: #00cc00; /* Darker green for subtle text */
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem; /* Smaller font size */
+            opacity: 0.7; /* Slightly transparent */
+        }
+
+        .visits-section .stat-number {
+            font-size: 1.5rem; /* Smaller number for visits count */
+            display: block; /* Ensure it takes full width */
+            margin-bottom: 0.2rem; /* Reduce margin */
+        }
+
+        .visits-section .stat-label {
+            font-size: 0.8rem; /* Even smaller label */
+        }
+
+
         /* Responsive adjustments */
         @media (max-width: 640px) {
             .card {
@@ -209,12 +200,6 @@
             }
             .stat-number {
                 font-size: 2.2rem;
-            }
-            .profile-info p.text-3xl { /* Nickname */
-                font-size: 2.5rem;
-            }
-            .profile-info h1.text-xl { /* Username */
-                font-size: 1.5rem;
             }
             .stats-grid {
                 flex-direction: column;
@@ -230,6 +215,15 @@
             }
             .link-item i {
                 font-size: 1.2rem;
+            }
+            .visits-section {
+                padding-top: 1rem;
+            }
+            .visits-section .stat-number {
+                font-size: 1.2rem;
+            }
+            .visits-section .stat-label {
+                font-size: 0.7rem;
             }
         }
 
@@ -349,19 +343,6 @@
     <div class="scanlines-overlay"></div>
 
     <div class="flex flex-col items-center w-full" id="main-content">
-        <div class="card profile-card boot-up-item">
-            <div class="profile-pic-container boot-up-item">
-                <img src="https://i.imgur.com/" alt="Profile Picture" class="w-32 h-32 rounded-full shadow-lg">
-                <span class="status-dot"></span>
-            </div>
-            <div class="profile-info">
-                <p class="text-3xl sm:text-4xl font-extrabold mb-2 text-white boot-up-item">
-                    <span class="glitch">jay</span>
-                </p>
-                <h1 class="text-xl sm:text-2xl font-semibold text-gray-400 boot-up-item">jlaiii</h1>
-            </div>
-        </div>
-
         <div class="card stats-card boot-up-item">
             <div class="flex flex-col sm:flex-row justify-around items-center stats-grid">
                 <div class="stat-item flex flex-col items-center m-4 boot-up-item">
@@ -379,26 +360,31 @@
         <div class="card links-card boot-up-item">
             <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-green-400 boot-up-item" style="font-family: 'Roboto Mono', monospace; text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);">[ NETWORK ACCESS ]</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 links-grid">
-                <a href="#" class="link-item boot-up-item">
+                <a href="https://mega.nz/folder/nsZDiBQJ#sZNCM-7zjtWOyHiGMAEUrA" target="_blank" class="link-item boot-up-item">
                     <i class="fas fa-tools"></i> PC Toolbox
                 </a>
                 <a href="https://github.com/jlaiii" target="_blank" class="link-item boot-up-item">
                     <i class="fab fa-github"></i> GitHub
                 </a>
-                <a href="#" class="link-item boot-up-item">
+                <a href="https://github.com/jlaiii?tab=repositories" target="_blank" class="link-item boot-up-item">
                     <i class="fas fa-project-diagram"></i> Projects
                 </a>
-                <a href="mailto:your-email@example.com" class="link-item boot-up-item">
+                <a href="mailto:jlaiii@protonmail.com" class="link-item boot-up-item">
                     <i class="fas fa-envelope"></i> Email
                 </a>
                 <a href="https://t.me/jlaiii" target="_blank" class="link-item boot-up-item">
                     <i class="fab fa-telegram-plane"></i> Telegram
                 </a>
                 <a href="#" class="link-item boot-up-item">
-                    <i class="fas fa-signal"></i> Signal
+                    <i class="fas fa-signal"></i> Signal: hzxcp77.54
                 </a>
             </div>
         </div>
+    </div>
+
+    <div class="visits-section boot-up-item">
+        <div class="stat-number" id="visits-count">0</div>
+        <div class="stat-label">TOTAL VISITS</div>
     </div>
 
     <script>
@@ -414,12 +400,22 @@
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 const currentValue = Math.floor(progress * (targetValue - startValue) + startValue);
-                element.textContent = currentValue;
+                
+                // Format with commas for visits count
+                if (elementId === 'visits-count') {
+                    element.textContent = currentValue.toLocaleString();
+                } else {
+                    element.textContent = currentValue;
+                }
 
                 if (progress < 1) {
                     requestAnimationFrame(step);
                 } else {
-                    element.textContent = targetValue; // Ensure final value is accurate
+                    if (elementId === 'visits-count') {
+                        element.textContent = targetValue.toLocaleString();
+                    } else {
+                        element.textContent = targetValue; // Ensure final value is accurate
+                    }
                 }
             };
 
@@ -473,17 +469,53 @@
             createCodeCharacter();
         }
 
+        // Function to "warp" text
+        function warpText(element, originalText, durationPerChar = 50, revealDelay = 100) {
+            const chars = originalText.split('');
+            let revealedChars = Array(chars.length).fill('');
+            let interval;
+            let revealIndex = 0;
+
+            const updateText = () => {
+                let currentText = '';
+                for (let i = 0; i < chars.length; i++) {
+                    if (revealedChars[i] === '') {
+                        currentText += characters.charAt(Math.floor(Math.random() * characters.length));
+                    } else {
+                        currentText += revealedChars[i];
+                    }
+                }
+                element.textContent = currentText;
+            };
+
+            const revealCharacter = () => {
+                if (revealIndex < chars.length) {
+                    revealedChars[revealIndex] = chars[revealIndex];
+                    revealIndex++;
+                    setTimeout(revealCharacter, revealDelay);
+                } else {
+                    clearInterval(interval);
+                    element.textContent = originalText; // Ensure final text is correct
+                }
+            };
+            
+            interval = setInterval(updateText, durationPerChar);
+            revealCharacter();
+        }
+
+
         // Preloader and Boot-up Logic
         document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
             const enterButton = document.getElementById('enter-button');
-            const bootingMessages = [
+            const bootingMessageElements = [
                 document.getElementById('booting-message-1'),
                 document.getElementById('booting-message-2'),
                 document.getElementById('booting-message-3'),
                 document.getElementById('booting-message-4'),
                 document.getElementById('booting-message-5')
             ];
+            const originalBootingTexts = bootingMessageElements.map(el => el.textContent); // Store original texts
             const bootUpItems = document.querySelectorAll('.boot-up-item'); // Select all elements with this class
 
             // Create an Audio object for the sound effect
@@ -497,19 +529,26 @@
                 enterButton.style.display = 'none'; // Hide the ENTER button
 
                 let messageIndex = 0;
-                const messageDelay = 1500; // 1.5 seconds for each message
+                const messageDisplayDuration = 1500; // 1.5 seconds for each message to be fully displayed
 
                 const showNextMessage = () => {
                     if (messageIndex > 0) {
-                        bootingMessages[messageIndex - 1].style.display = 'none'; // Hide previous message
-                        bootingMessages[messageIndex - 1].classList.remove('active'); // Remove active class for blinking
+                        bootingMessageElements[messageIndex - 1].style.display = 'none'; // Hide previous message
+                        bootingMessageElements[messageIndex - 1].classList.remove('active'); // Remove active class for blinking
                     }
                     
-                    if (messageIndex < bootingMessages.length) {
-                        bootingMessages[messageIndex].style.display = 'block'; // Show current message
-                        bootingMessages[messageIndex].classList.add('active'); // Add active class for blinking
+                    if (messageIndex < bootingMessageElements.length) {
+                        const currentMessageElement = bootingMessageElements[messageIndex];
+                        const originalText = originalBootingTexts[messageIndex];
+
+                        currentMessageElement.style.display = 'block'; // Show current message
+                        currentMessageElement.classList.add('active'); // Add active class for blinking
+                        
+                        // Apply warp effect
+                        warpText(currentMessageElement, originalText, 40, 60); // Faster warp effect
+
                         messageIndex++;
-                        setTimeout(showNextMessage, messageDelay);
+                        setTimeout(showNextMessage, messageDisplayDuration);
                     } else {
                         // All messages shown, now fade out preloader
                         preloader.classList.add('fade-out');
@@ -526,6 +565,7 @@
                             // Animate numbers after content is visible
                             animateNumber('coffee-count', 723);
                             animateNumber('projects-count', 23);
+                            animateNumber('visits-count', 87283);
 
                         }, 1000); // Wait for preloader fade-out
                     }
