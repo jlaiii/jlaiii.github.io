@@ -3,27 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jlaiii's Digital Profile</title>
+    <title>jlaiii's Digital Profile // Access Granted</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Define CSS Variables for a cleaner, consistent theme */
+        :root {
+            --bg-color: #0A1016; /* Even darker, slightly blue-black */
+            --card-bg: rgba(20, 28, 38, 0.95); /* Dark blue-grey, higher opacity */
+            --primary-green: #00E676; /* Vibrant, almost neon green */
+            --secondary-cyan: #00FFFF; /* Pure cyan */
+            --text-light: #E0E6EF; /* Light grey-blue */
+            --text-subtle: #8899AA; /* Medium grey-blue */
+            --border-glow: rgba(0, 230, 118, 0.5); /* Glow based on primary green */
+            --shadow-strong: rgba(0, 230, 118, 0.4);
+            --shadow-subtle: rgba(0, 230, 118, 0.15);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d1117; /* Even darker background for matrix effect */
+            background-color: var(--bg-color);
             display: flex;
-            flex-direction: column; /* Changed to column to put visits at bottom */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100vh; /* Ensures full viewport height */
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Hide scrollbars, especially for rain */
+            color: var(--text-light);
+            /* Anti-aliasing for smoother text rendering */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Matrix Style Falling Code Background - Enhanced */
+        /* Subtle Radial Gradient for Depth on background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 230, 118, 0.03) 0%, transparent 70%);
+            z-index: -2; /* Below content, above rain */
+            pointer-events: none; /* Allows clicks through */
+        }
+
+        /* Matrix Style Falling Code Background - Enhanced and Subtler */
         .code-rain-container {
             position: fixed;
             top: 0;
@@ -31,214 +61,257 @@
             width: 100%;
             height: 100%;
             background-color: transparent;
-            z-index: -1;
+            z-index: -1; /* Below content */
             pointer-events: none;
             overflow: hidden;
             font-family: 'Roboto Mono', monospace;
-            color: #00ff00; /* Bright green for matrix code */
-            filter: blur(0.5px); /* Subtle blur for depth */
+            color: var(--primary-green); /* Bright green for matrix code */
+            filter: blur(0.3px); /* Subtler blur for atmospheric effect */
         }
 
         .code-character {
             position: absolute;
-            opacity: var(--initial-opacity, 0.7); /* Slightly less opaque for better rain effect */
-            font-size: var(--font-size, 1.2rem); /* Variable font size */
-            animation: fall var(--fall-duration, 15s) linear infinite;
-            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; /* Green glow */
+            opacity: var(--initial-opacity, 0.5); /* More subtle opacity */
+            font-size: var(--font-size, 1rem); /* Variable font size for depth */
+            animation: fall var(--fall-duration, 12s) linear infinite;
+            text-shadow: 0 0 3px var(--primary-green); /* Subtler glow */
+            /* Random color variation for more visual interest (green to greenish-cyan) */
+            color: hsl(calc(120 + var(--hue-offset, 0)), 100%, 70%); /* Start at green (120deg hue), shift up to 30deg */
         }
 
         @keyframes fall {
             0% {
                 transform: translateY(-100%);
-                opacity: var(--initial-opacity, 0.7);
+                opacity: var(--initial-opacity, 0.5);
             }
             100% {
                 transform: translateY(100vh);
-                opacity: 0.1; /* Fade out more */
+                opacity: 0.05; /* Fade out significantly at bottom */
             }
         }
 
+        /* Card Styling */
         .card {
-            background-color: rgba(18, 23, 30, 0.9); /* Darker, slightly transparent for background bleed */
-            border-radius: 0.5rem; /* Sharper corners */
-            padding: 3rem; /* Increased padding */
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.1); /* Green outer glow, subtle inner glow */
-            border: 1px solid #00ff00; /* Bright green border */
-            color: #e2e8f0;
+            background-color: var(--card-bg);
+            border-radius: 0.75rem; /* Slightly more rounded corners */
+            padding: 3rem;
+            box-shadow: 0 0 25px var(--shadow-strong), inset 0 0 10px var(--shadow-subtle); /* Refined glow */
+            border: 1px solid var(--primary-green); /* Cleaner, crisp border */
             width: 100%;
-            max-width: 550px; /* Slightly wider cards */
+            max-width: 600px; /* Slightly wider cards for more content */
             text-align: center;
-            z-index: 1;
+            z-index: 1; /* Above background effects */
             position: relative;
-            backdrop-filter: blur(3px); /* Subtle blur behind card for effect */
-            margin-bottom: 2.5rem; /* Added margin for spacing between cards */
+            backdrop-filter: blur(5px); /* More pronounced blur effect behind card */
+            margin-bottom: 2.5rem;
+            transition: all 0.4s ease-out; /* Smooth transition for hover effects */
+        }
+
+        .card:hover {
+             box-shadow: 0 0 35px var(--shadow-strong), inset 0 0 15px var(--shadow-subtle); /* Stronger glow on hover */
+             transform: translateY(-2px); /* Subtle lift on hover */
         }
 
         .links-card {
-            margin-top: 2.5rem; /* Space above links card */
+            margin-top: 2.5rem; /* Explicit space between cards */
         }
 
+        /* Glitch Effect for Main Title */
         .glitch {
-            font-family: 'Roboto Mono', monospace; /* Glitch text is also monospace */
+            font-family: 'Roboto Mono', monospace;
             position: relative;
-            animation: glitch-anim 1.8s infinite alternate ease-in-out; /* Slightly longer, more pronounced shifts */
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.7); /* Subtle green glow for normal state */
+            animation: glitch-anim 2s infinite alternate ease-in-out; /* Smoother, slightly longer glitch cycle */
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8); /* Stronger initial glow */
+            color: var(--primary-green);
         }
 
-        /* Enhanced Glitch Animation for more "shifting" appearance */
+        /* Refined Glitch Animation Keyframes */
         @keyframes glitch-anim {
             0% {
                 transform: translate(0, 0);
-                text-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+                text-shadow: 0 0 10px var(--primary-green);
                 opacity: 1;
             }
-            15% {
-                transform: translate(-5px, 3px); /* Shift left and down */
-                text-shadow: 0.05em 0.03em 0 rgba(255, 0, 0, 0.8), -0.03em -0.05em 0 rgba(0, 255, 255, 0.8);
-                opacity: 0.85;
+            10% {
+                transform: translate(-3px, 2px);
+                text-shadow: 0.03em 0.02em 0 rgba(255, 0, 0, 0.7), -0.02em -0.03em 0 rgba(0, 255, 255, 0.7);
+                opacity: 0.9;
+            }
+            20% {
+                transform: translate(4px, -3px);
+                text-shadow: -0.02em 0.04em 0 rgba(255, 0, 0, 0.7), 0.04em -0.02em 0 rgba(0, 255, 255, 0.7);
+                opacity: 0.88;
             }
             30% {
-                transform: translate(6px, -4px); /* Shift right and up */
-                text-shadow: -0.04em 0.06em 0 rgba(255, 0, 0, 0.8), 0.06em -0.04em 0 rgba(0, 255, 255, 0.8);
-                opacity: 0.9;
+                transform: translate(-5px, 1px);
+                text-shadow: 0.05em -0.01em 0 rgba(255, 0, 0, 0.7), -0.01em 0.05em 0 rgba(0, 255, 255, 0.7);
+                opacity: 0.92;
             }
-            45% {
-                transform: translate(-3px, -5px); /* Shift left and up */
-                text-shadow: 0.03em -0.05em 0 rgba(255, 0, 0, 0.8), -0.05em 0.03em 0 rgba(0, 255, 255, 0.8);
+            40% {
+                transform: translate(2px, -4px);
+                text-shadow: -0.01em -0.04em 0 rgba(255, 0, 0, 0.7), 0.04em 0.01em 0 rgba(0, 255, 255, 0.7);
                 opacity: 0.85;
             }
-            60% {
-                transform: translate(7px, 2px); /* Shift right and slightly down */
-                text-shadow: -0.06em -0.02em 0 rgba(255, 0, 0, 0.8), 0.02em 0.06em 0 rgba(0, 255, 255, 0.8);
+            50% {
+                transform: translate(-4px, 3px);
+                text-shadow: 0.04em 0.03em 0 rgba(255, 0, 0, 0.7), -0.03em -0.04em 0 rgba(0, 255, 255, 0.7);
                 opacity: 0.9;
             }
-            75% {
-                transform: translate(-2px, 4px); /* Shift left and down */
-                text-shadow: 0.04em 0.02em 0 rgba(255, 0, 0, 0.8), 0.02em -0.04em 0 rgba(0, 255, 255, 0.8);
-                opacity: 0.88;
+            60% {
+                transform: translate(1px, -2px);
+                text-shadow: -0.02em 0.02em 0 rgba(255, 0, 0, 0.7), 0.02em -0.02em 0 rgba(0, 255, 255, 0.7);
+                opacity: 0.95;
+            }
+            70% {
+                transform: translate(-3px, 5px);
+                text-shadow: 0.03em 0.05em 0 rgba(255, 0, 0, 0.7), -0.05em -0.03em 0 rgba(0, 255, 255, 0.7);
+                opacity: 0.87;
+            }
+            80% {
+                transform: translate(4px, -1px);
+                text-shadow: -0.04em -0.01em 0 rgba(255, 0, 0, 0.7), 0.01em 0.04em 0 rgba(0, 255, 255, 0.7);
+                opacity: 0.93;
+            }
+            90% {
+                transform: translate(-2px, 2px);
+                text-shadow: 0.02em 0.02em 0 rgba(255, 0, 0, 0.7), -0.02em -0.02em 0 rgba(0, 255, 255, 0.7);
+                opacity: 0.89;
             }
             100% {
                 transform: translate(0, 0);
-                text-shadow: 0 0 8px rgba(0, 255, 0, 0.7); /* Return to normal glow */
+                text-shadow: 0 0 10px var(--primary-green); /* Return to normal glow */
                 opacity: 1;
             }
         }
 
+        /* Stats Number and Label Styling */
         .stat-number {
-            font-family: 'Roboto Mono', monospace; /* Stats numbers are monospace */
-            font-size: 2.8rem; /* Even larger font for numbers */
+            font-family: 'Roboto Mono', monospace;
+            font-size: 3rem; /* Larger font for emphasis */
             font-weight: 700;
-            color: #00ffff; /* Cyan for numbers */
+            color: var(--secondary-cyan); /* Cyan for numbers */
             line-height: 1;
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 8px rgba(0, 255, 255, 0.5); /* Cyan glow */
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Cyan glow */
         }
 
         .stat-label {
             font-family: 'Inter', sans-serif;
-            font-size: 1.1rem; /* Slightly larger label */
-            color: #00cc00; /* Darker green for labels */
+            font-size: 1.1rem;
+            color: var(--text-subtle); /* Subtler grey for labels */
         }
 
+        /* Link Item Styling */
         .link-item {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba(26, 32, 44, 0.8); /* Darker background for each link */
-            padding: 0.75rem 1.5rem; /* Adjusted padding */
-            border-radius: 0.375rem; /* Rounded corners */
-            border: 1px solid #00cc00; /* Green border for links */
-            transition: all 0.3s ease;
+            background-color: rgba(30, 40, 55, 0.8); /* Darker background for each link */
+            padding: 0.85rem 1.75rem; /* Adjusted padding for a modern button feel */
+            border-radius: 0.5rem; /* More rounded corners */
+            border: 1px solid var(--primary-green); /* Green border for links */
+            transition: all 0.3s ease; /* Smooth transitions for all properties */
             text-decoration: none;
-            color: #e2e8f0;
+            color: var(--text-light);
             font-family: 'Roboto Mono', monospace;
-            font-size: 1.1rem;
-            box-shadow: 0 0 5px rgba(0, 255, 0, 0.2); /* Subtle glow */
+            font-size: 1.15rem; /* Slightly larger font */
+            box-shadow: 0 0 8px var(--shadow-subtle); /* Subtle glow */
         }
 
         .link-item:hover {
-            background-color: rgba(0, 255, 0, 0.1); /* Lighter green on hover */
-            border-color: #00ff00; /* Brighter green border on hover */
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6); /* Stronger glow on hover */
-            color: #00ff00; /* Green text on hover */
-            transform: translateY(-3px); /* Slight lift effect */
+            background-color: rgba(0, 230, 118, 0.15); /* Lighter green on hover */
+            border-color: var(--primary-green); /* Brighter green border on hover */
+            box-shadow: 0 0 20px var(--shadow-strong); /* Stronger glow on hover */
+            color: var(--primary-green); /* Green text on hover */
+            transform: translateY(-5px) scale(1.02); /* More pronounced lift and slight scale */
         }
 
         .link-item i {
-            margin-right: 0.75rem; /* Space between icon and text */
-            color: #00ffff; /* Cyan icon color */
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Cyan glow for icons */
+            margin-right: 0.85rem; /* Space between icon and text */
+            color: var(--secondary-cyan); /* Cyan icon color */
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.7); /* Cyan glow for icons */
+            transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth icon transitions */
         }
 
+        .link-item:hover i {
+            color: var(--primary-green); /* Icon color matches text on hover */
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
+        }
+
+        /* Visits Section Styling */
         .visits-section {
-            margin-top: auto; /* Pushes it to the bottom */
+            margin-top: auto; /* Pushes it to the bottom of the flex container */
             text-align: center;
             padding-top: 2rem;
             z-index: 1; /* Keep it above background effects */
-            color: #00cc00; /* Darker green for subtle text */
+            color: var(--text-subtle);
             font-family: 'Roboto Mono', monospace;
-            font-size: 0.9rem; /* Smaller font size */
-            opacity: 0.7; /* Slightly transparent */
+            font-size: 0.95rem; /* Slightly larger font size */
+            opacity: 0.8; /* Less transparent */
+            transition: opacity 0.8s ease-out; /* Smooth transition for boot-up */
         }
 
         .visits-section .stat-number {
-            font-size: 1.5rem; /* Smaller number for visits count */
-            display: block; /* Ensure it takes full width */
-            margin-bottom: 0.2rem; /* Reduce margin */
+            font-size: 1.6rem; /* Slightly larger number for visits count */
+            display: block;
+            margin-bottom: 0.3rem;
+            color: var(--secondary-cyan);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
         }
 
         .visits-section .stat-label {
-            font-size: 0.8rem; /* Even smaller label */
+            font-size: 0.85rem; /* Slightly larger label */
+            color: var(--text-subtle);
         }
 
-
-        /* Responsive adjustments */
-        @media (max-width: 640px) {
+        /* Responsive adjustments for mobile devices */
+        @media (max-width: 768px) {
             .card {
-                padding: 1.5rem;
-                border-radius: 0.75rem;
+                padding: 2rem;
+                max-width: 90%; /* Occupy more width on smaller screens */
             }
             .stat-number {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
             .stats-grid {
-                flex-direction: column;
-                gap: 2rem; /* Increased gap for mobile */
+                flex-direction: column; /* Stack stats vertically */
+                gap: 2.5rem; /* Increased gap for mobile */
             }
             .links-grid {
-                flex-direction: column;
-                gap: 1rem; /* Closer links on mobile */
+                flex-direction: column; /* Stack links vertically */
+                gap: 1.2rem; /* Slightly closer links on mobile */
             }
             .link-item {
-                padding: 0.6rem 1rem;
-                font-size: 1rem;
+                padding: 0.7rem 1.2rem;
+                font-size: 1.05rem;
             }
             .link-item i {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             .visits-section {
-                padding-top: 1rem;
+                padding-top: 1.5rem;
             }
             .visits-section .stat-number {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             .visits-section .stat-label {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
             }
         }
 
-        /* Movie-like Effects */
+        /* Movie-like Effects: Film Grain & Scanlines overlays */
         .film-grain-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEUAAAAaGhohISElJSUbGxskJCQbGxshISElJSUgICAlJSUbGxshISElJSUbGxskJCQkJCQEtXh7AAAAHnRSTlMACAgICAgICAgICAgICAgICAgICAgICAgICAgIC/M7jXkAAABmSURBVDjL7dJBDsAgDATBu0k3d/r/rD1fGBJTCq8g+R92vLzN9rQy1iYxPzY2cDBrB/yQkC+B+H9fS+ZfUvz4PzS/h+bFzW/n7d8e2vjC2sR5/d2f3/z4/h8HAAAAAP+nIw+5y/sC+gAAAABJRU5ErkJggg=='); /* A simple grain pattern */
-            background-size: 100px;
-            opacity: 0.08; /* Subtle grain */
+            /* A simple base64 encoded grain pattern (small, repeats) */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEUAAAAaGhohISElJSUbGxskJCQbGxshISElJSUgICAlJSUbGxshISElJSUbGxskJCQkJCQEtXh7AAAAHnRSTlMACAgICAgICAgICAgICAgICAgICAgICAgICAgIC/M7jXkAAABmSURBVDjL7dJBDsAgDATBu0k3d/r/rD1fGBJTCq8g+R92vLzN9rQy1iYxPzY2cDBrB/yQkC+B+H9fS+ZfUvz4PzS/h+bFzW/n7d8e2vjC2sR5/d2f3/z4/h8HAAAAAP+nIw+5y/sC+gAAAABJRU5ErkJggg==');
+            background-size: 100px; /* How big each grain tile is */
+            opacity: 0.06; /* Even subtler grain */
             pointer-events: none;
-            z-index: 1000;
+            z-index: 1000; /* Above content */
         }
 
         .scanlines-overlay {
@@ -247,10 +320,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1) 51%);
-            background-size: 100% 4px; /* Thin scanlines */
+            /* Creates thin horizontal lines */
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.15) 51%);
+            background-size: 100% 3px; /* Thinner scanlines, 3px high per line set */
             pointer-events: none;
-            z-index: 1001;
+            z-index: 1001; /* Above grain */
         }
 
         /* Preloader/Enter Screen */
@@ -260,65 +334,70 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #0d1117;
+            background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease-out;
+            z-index: 9999; /* Highest z-index to cover everything */
+            transition: opacity 1.5s ease-out; /* Slower fade-out transition */
             opacity: 1;
         }
 
         .preloader.fade-out {
             opacity: 0;
-            pointer-events: none;
+            pointer-events: none; /* Disable interaction after fading out */
         }
 
         .enter-button {
-            background-color: #00ff00;
-            color: #0d1117;
-            border: 2px solid #00ff00;
-            padding: 1rem 3rem;
-            font-size: 1.8rem;
+            background-color: var(--primary-green);
+            color: var(--bg-color);
+            border: 2px solid var(--primary-green);
+            padding: 1.2rem 3.5rem;
+            font-size: 2rem; /* Larger button text */
             font-family: 'Roboto Mono', monospace;
             cursor: pointer;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            border-radius: 0.75rem; /* More rounded */
+            transition: all 0.4s ease; /* Smooth transition for hover effects */
+            box-shadow: 0 0 20px var(--shadow-strong);
+            text-transform: uppercase; /* All caps */
+            font-weight: 700;
+            letter-spacing: 0.05em; /* Spaced out letters */
         }
 
         .enter-button:hover {
-            background-color: #00cc00;
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.9);
-            transform: scale(1.05);
+            background-color: var(--primary-green); /* Stays green */
+            color: var(--bg-color); /* Stays dark */
+            box-shadow: 0 0 30px var(--shadow-strong); /* Stronger glow */
+            transform: scale(1.08) rotateX(2deg); /* More dynamic hover effect */
         }
 
         .loading-text {
             font-family: 'Roboto Mono', monospace;
-            color: #00ff00;
-            font-size: 1.5rem;
-            margin-top: 2rem;
-            /* Initially hidden, will be shown by JS */
-            display: none; 
-            position: absolute; /* To make messages overlap */
+            color: var(--primary-green);
+            font-size: 1.6rem; /* Slightly larger */
+            margin-top: 2.5rem; /* More space */
+            display: none; /* Hidden by default, shown by JS */
+            position: absolute; /* Allows messages to overlap cleanly */
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
         }
         
-        .loading-text.active {
-            opacity: 0; /* Start hidden for blinking animation */
-            animation: blink 0.7s infinite alternate;
+        /* Blinking cursor for typing effect */
+        .loading-text .cursor {
+            display: inline-block; /* Allows cursor to blink next to typed text */
+            animation: blinking-cursor 0.7s infinite steps(1) alternate; /* Simulate typing cursor blink */
         }
 
-        @keyframes blink {
+        @keyframes blinking-cursor {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
         /* Content Boot-up Animation for individual elements */
         .boot-up-item {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Slower transition for each item */
+            opacity: 0; /* Hidden by default */
+            transform: translateY(30px); /* Start further down */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Slower transition for a smoother reveal */
         }
 
         .boot-up-item.is-visible {
@@ -329,12 +408,11 @@
 </head>
 <body>
     <div class="preloader" id="preloader">
-        <button class="enter-button" id="enter-button">ENTER</button>
-        <p class="loading-text" id="booting-message-1">BOOTING UP...</p>
-        <p class="loading-text" id="booting-message-2">CONNECTING TO NETWORK...</p>
-        <p class="loading-text" id="booting-message-3">AUTHENTICATING USER...</p>
-        <p class="loading-text" id="booting-message-4">LOADING ASSETS...</p>
-        <p class="loading-text" id="booting-message-5">ACCESS GRANTED.</p>
+        <button class="enter-button" id="enter-button">ACCESS TERMINAL</button>
+        <!-- Container for the typing message and cursor -->
+        <div class="loading-text" id="booting-message-container">
+            <span id="booting-message-typed"></span><span class="cursor">_</span>
+        </div>
     </div>
 
     <div class="code-rain-container" id="code-rain-container"></div>
@@ -342,237 +420,284 @@
     <div class="film-grain-overlay"></div>
     <div class="scanlines-overlay"></div>
 
-    <div class="flex flex-col items-center w-full" id="main-content">
-        <div class="card stats-card boot-up-item">
+    <!-- Main content container, initially hidden for fade-in -->
+    <div class="flex flex-col items-center w-full min-h-screen" id="main-content" style="opacity:0;">
+        <div class="card profile-card boot-up-item mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold mb-4 glitch">[ JLAIII ]</h1>
+            <p class="text-xl sm:text-2xl mb-6 text-cyan-300 boot-up-item" style="font-family: 'Roboto Mono', monospace; text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);">
+                > SYSTEM_READY
+            </p>
+            <p class="text-base sm:text-lg text-gray-300 mb-8 boot-up-item">
+                // Enthusiast in systems, automation, and digital security.
+            </p>
             <div class="flex flex-col sm:flex-row justify-around items-center stats-grid">
                 <div class="stat-item flex flex-col items-center m-4 boot-up-item">
                     <div class="stat-number" id="coffee-count">0</div>
                     <div class="stat-label">COFFEE DRANK</div>
                 </div>
-
                 <div class="stat-item flex flex-col items-center m-4 boot-up-item">
                     <div class="stat-number" id="projects-count">0</div>
-                    <div class="stat-label">PROJECTS</div>
+                    <div class="stat-label">PROJECTS COMPLETED</div>
                 </div>
             </div>
         </div>
 
         <div class="card links-card boot-up-item">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-green-400 boot-up-item" style="font-family: 'Roboto Mono', monospace; text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);">[ NETWORK ACCESS ]</h2>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-green-400" style="font-family: 'Roboto Mono', monospace; text-shadow: 0 0 10px var(--primary-green);">[ NETWORK INTERFACE ]</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 links-grid">
                 <a href="https://mega.nz/folder/nsZDiBQJ#sZNCM-7zjtWOyHiGMAEUrA" target="_blank" class="link-item boot-up-item">
                     <i class="fas fa-tools"></i> PC Toolbox
                 </a>
                 <a href="https://github.com/jlaiii" target="_blank" class="link-item boot-up-item">
-                    <i class="fab fa-github"></i> GitHub
+                    <i class="fab fa-github"></i> GitHub Profile
                 </a>
                 <a href="https://github.com/jlaiii?tab=repositories" target="_blank" class="link-item boot-up-item">
-                    <i class="fas fa-project-diagram"></i> Projects
+                    <i class="fas fa-code-branch"></i> Repositories
                 </a>
                 <a href="mailto:jlaiii@protonmail.com" class="link-item boot-up-item">
-                    <i class="fas fa-envelope"></i> Email
+                    <i class="fas fa-envelope"></i> Email Proton
                 </a>
                 <a href="https://t.me/jlaiii" target="_blank" class="link-item boot-up-item">
-                    <i class="fab fa-telegram-plane"></i> Telegram
+                    <i class="fab fa-telegram-plane"></i> Telegram Channel
                 </a>
                 <a href="#" class="link-item boot-up-item">
-                    <i class="fas fa-signal"></i> Signal: hzxcp77.54
+                    <i class="fas fa-signal"></i> Signal ID: hzxcp77.54
                 </a>
             </div>
         </div>
-    </div>
 
-    <div class="visits-section boot-up-item">
-        <div class="stat-number" id="visits-count">0</div>
-        <div class="stat-label">TOTAL VISITS</div>
+        <div class="visits-section boot-up-item">
+            <div class="stat-number" id="visits-count">0</div>
+            <div class="stat-label">TOTAL VISITORS</div>
+        </div>
     </div>
 
     <script>
-        // Function to animate a number count up
-        function animateNumber(elementId, targetValue, duration = 2000) {
+        // Set the viewport height initially to prevent mobile address bar issues
+        // and update on resize to ensure full height for background effects
+        function setVhProperty() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        window.addEventListener('resize', setVhProperty);
+        setVhProperty();
+
+        // Function to "warp" text: scrambles, then resolves to original text
+        function warpText(element, originalText, charScrambleSpeed = 50, charRevealDelay = 60) {
+            const characters = '0123456789!@#$%^&*()_+-=[]{}|;:,.<>/?`~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            const chars = originalText.split('');
+            let revealedChars = Array(chars.length).fill('');
+            let scrambleIntervalId;
+            let revealTimeoutId;
+            let revealIndex = 0;
+
+            element.textContent = ''; // Clear current content before starting new warp
+
+            const updateScrambledText = () => {
+                let currentDisplay = '';
+                for (let i = 0; i < chars.length; i++) {
+                    if (revealedChars[i] === '') {
+                        currentDisplay += characters.charAt(Math.floor(Math.random() * characters.length));
+                    } else {
+                        currentDisplay += revealedChars[i];
+                    }
+                }
+                element.textContent = currentDisplay;
+            };
+
+            return new Promise(resolve => {
+                // Start the scrambling immediately
+                scrambleIntervalId = setInterval(updateScrambledText, charScrambleSpeed);
+
+                // Function to reveal one character at a time
+                const revealNextChar = () => {
+                    if (revealIndex < chars.length) {
+                        revealedChars[revealIndex] = chars[revealIndex]; // Set the actual character
+                        updateScrambledText(); // Update the display to show the newly revealed char
+                        revealIndex++;
+                        revealTimeoutId = setTimeout(revealNextChar, charRevealDelay);
+                    } else {
+                        // All characters revealed, stop scrambling
+                        clearInterval(scrambleIntervalId);
+                        element.textContent = originalText; // Ensure final text is exact
+                        resolve();
+                    }
+                };
+                
+                // Start revealing after a tiny initial delay
+                setTimeout(revealNextChar, 100); 
+            });
+        }
+
+        // Animated Number Counter (smooth count-up)
+        function animateNumber(elementId, targetValue, duration = 1500) {
             const element = document.getElementById(elementId);
             if (!element) return;
 
             let startTimestamp = null;
-            const startValue = 0; // Always start from 0
+            const startValue = 0;
 
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 const currentValue = Math.floor(progress * (targetValue - startValue) + startValue);
                 
-                // Format with commas for visits count
-                if (elementId === 'visits-count') {
-                    element.textContent = currentValue.toLocaleString();
-                } else {
-                    element.textContent = currentValue;
-                }
+                element.textContent = currentValue.toLocaleString();
 
                 if (progress < 1) {
                     requestAnimationFrame(step);
                 } else {
-                    if (elementId === 'visits-count') {
-                        element.textContent = targetValue.toLocaleString();
-                    } else {
-                        element.textContent = targetValue; // Ensure final value is accurate
-                    }
+                    element.textContent = targetValue.toLocaleString();
                 }
             };
 
             requestAnimationFrame(step);
         }
 
+        // --- NEW: Function to fetch GitHub Repo Count ---
+        async function fetchGitHubRepoCount() {
+            try {
+                const username = 'jlaiii'; // Your GitHub username
+                const response = await fetch(`https://api.github.com/users/${username}`);
+                
+                if (!response.ok) {
+                    // Log error if response is not ok (e.g., 404, 500)
+                    console.error(`GitHub API error: ${response.status} ${response.statusText}`);
+                    // Fallback to a default value if API call fails
+                    animateNumber('projects-count', 23); 
+                    return;
+                }
+                
+                const data = await response.json();
+                const repoCount = data.public_repos; // The GitHub API returns 'public_repos'
+                
+                if (typeof repoCount === 'number') {
+                    animateNumber('projects-count', repoCount);
+                } else {
+                    console.warn('GitHub API did not return a valid public_repos number.');
+                    // Fallback if the data structure is unexpected
+                    animateNumber('projects-count', 23); 
+                }
+
+            } catch (error) {
+                console.error('Error fetching GitHub repo count:', error);
+                // Fallback in case of network issues or other errors
+                animateNumber('projects-count', 23);
+            }
+        }
+
         // --- Code Rain Effect Script ---
         const codeRainContainer = document.getElementById('code-rain-container');
-        // Extended characters for a more varied matrix effect, including more symbols and mixed case
         const characters = '0123456789!@#$%^&*()_+-=[]{}|;:,.<>/?`~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        const numberOfCharacters = 300; // Increased for higher density
-        const minFallDuration = 6; // seconds (faster fall)
-        const maxFallDuration = 20; // seconds (faster fall)
+        const numberOfCharacters = 400;
+        const minFallDuration = 8;
+        const maxFallDuration = 25;
 
         function createCodeCharacter() {
             const char = document.createElement('span');
             char.classList.add('code-character');
-            // Randomly pick a character from the set
             char.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
 
             const startX = Math.random() * 100 + 'vw';
             const animationDuration = Math.random() * (maxFallDuration - minFallDuration) + minFallDuration;
-            const delay = Math.random() * 6; // Shorter delay range for more continuous rain
-            const initialOpacity = Math.random() * (1 - 0.5) + 0.5; // Vary initial opacity more
-            const fontSize = Math.random() * (1.5 - 0.7) + 0.7; // Vary font size for depth effect, slightly smaller range
+            const delay = Math.random() * 8;
+            const initialOpacity = Math.random() * (0.6 - 0.2) + 0.2;
+            const fontSize = Math.random() * (1.3 - 0.6) + 0.6;
+            const hueOffset = Math.random() * 30;
 
             char.style.left = startX;
             char.style.setProperty('--fall-duration', animationDuration + 's');
             char.style.animationDelay = delay + 's';
             char.style.setProperty('--initial-opacity', initialOpacity);
             char.style.setProperty('--font-size', fontSize + 'rem');
+            char.style.setProperty('--hue-offset', hueOffset);
 
-            // Random initial Y to make them appear from different vertical positions at start
             char.style.transform = `translateY(-${Math.random() * 100}%)`;
 
-            // Reset and re-animate when animation ends
             char.addEventListener('animationiteration', () => {
-                char.textContent = characters.charAt(Math.floor(Math.random() * characters.length)); // Change character
-                char.style.left = Math.random() * 100 + 'vw'; // New horizontal position
+                char.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
+                char.style.left = Math.random() * 100 + 'vw';
                 char.style.setProperty('--fall-duration', (Math.random() * (maxFallDuration - minFallDuration) + minFallDuration) + 's');
-                char.style.animationDelay = '0s'; // Reset delay for immediate restart
-                char.style.setProperty('--initial-opacity', Math.random() * (1 - 0.5) + 0.5);
-                char.style.setProperty('--font-size', (Math.random() * (1.5 - 0.7) + 0.7) + 'rem');
+                char.style.animationDelay = '0s';
+                char.style.setProperty('--initial-opacity', Math.random() * (0.6 - 0.2) + 0.2);
+                char.style.setProperty('--font-size', (Math.random() * (1.3 - 0.6) + 0.6) + 'rem');
+                char.style.setProperty('--hue-offset', Math.random() * 30);
             });
 
             codeRainContainer.appendChild(char);
         }
 
-        // Generate initial characters
         for (let i = 0; i < numberOfCharacters; i++) {
             createCodeCharacter();
         }
-
-        // Function to "warp" text
-        function warpText(element, originalText, durationPerChar = 50, revealDelay = 100) {
-            const chars = originalText.split('');
-            let revealedChars = Array(chars.length).fill('');
-            let interval;
-            let revealIndex = 0;
-
-            const updateText = () => {
-                let currentText = '';
-                for (let i = 0; i < chars.length; i++) {
-                    if (revealedChars[i] === '') {
-                        currentText += characters.charAt(Math.floor(Math.random() * characters.length));
-                    } else {
-                        currentText += revealedChars[i];
-                    }
-                }
-                element.textContent = currentText;
-            };
-
-            const revealCharacter = () => {
-                if (revealIndex < chars.length) {
-                    revealedChars[revealIndex] = chars[revealIndex];
-                    revealIndex++;
-                    setTimeout(revealCharacter, revealDelay);
-                } else {
-                    clearInterval(interval);
-                    element.textContent = originalText; // Ensure final text is correct
-                }
-            };
-            
-            interval = setInterval(updateText, durationPerChar);
-            revealCharacter();
-        }
-
 
         // Preloader and Boot-up Logic
         document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
             const enterButton = document.getElementById('enter-button');
-            const bootingMessageElements = [
-                document.getElementById('booting-message-1'),
-                document.getElementById('booting-message-2'),
-                document.getElementById('booting-message-3'),
-                document.getElementById('booting-message-4'),
-                document.getElementById('booting-message-5')
+            const mainContent = document.getElementById('main-content');
+            const bootingMessageTyped = document.getElementById('booting-message-typed');
+            const bootingMessageContainer = document.getElementById('booting-message-container');
+            const bootUpItems = document.querySelectorAll('.boot-up-item');
+
+            const bootingMessages = [
+                "INITIATING SECURE PROTOCOL...",
+                "ESTABLISHING NEURAL INTERFACE...",
+                "LOADING CORE MODULES...",
+                "SYNCHRONIZING DATASTREAM...",
+                "ACCESS GRANTED.",
+                "WELCOME, USER."
             ];
-            const originalBootingTexts = bootingMessageElements.map(el => el.textContent); // Store original texts
-            const bootUpItems = document.querySelectorAll('.boot-up-item'); // Select all elements with this class
 
-            // Create an Audio object for the sound effect
             const bootSound = new Audio('https://files.catbox.moe/7p0fk4.mp3');
-            bootSound.volume = 0.5; // Set volume to 50%
+            bootSound.volume = 0.5;
+            bootSound.playbackRate = 1.1;
 
-            enterButton.addEventListener('click', () => {
-                // Play the sound effect
+            enterButton.addEventListener('click', async () => {
                 bootSound.play();
 
-                enterButton.style.display = 'none'; // Hide the ENTER button
+                enterButton.style.opacity = '0';
+                enterButton.style.pointerEvents = 'none';
+                setTimeout(() => enterButton.style.display = 'none', 500);
 
-                let messageIndex = 0;
-                const messageDisplayDuration = 1500; // 1.5 seconds for each message to be fully displayed
+                bootingMessageContainer.style.display = 'block'; // Show the message container (which includes cursor)
 
-                const showNextMessage = () => {
-                    if (messageIndex > 0) {
-                        bootingMessageElements[messageIndex - 1].style.display = 'none'; // Hide previous message
-                        bootingMessageElements[messageIndex - 1].classList.remove('active'); // Remove active class for blinking
+                for (let i = 0; i < bootingMessages.length; i++) {
+                    // Ensure cursor is visible and blinking before typing starts for the new message
+                    document.querySelector('#booting-message-container .cursor').classList.add('active'); 
+
+                    await warpText(bootingMessageTyped, bootingMessages[i]); // Apply warp effect to the message
+
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Pause briefly after message is fully displayed
+
+                    if (i < bootingMessages.length - 1) {
+                        bootingMessageTyped.textContent = ''; // Clear for next message
+                        // The cursor stays active as it's part of the parent container which is still displayed
                     }
-                    
-                    if (messageIndex < bootingMessageElements.length) {
-                        const currentMessageElement = bootingMessageElements[messageIndex];
-                        const originalText = originalBootingTexts[messageIndex];
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Final pause after last message
 
-                        currentMessageElement.style.display = 'block'; // Show current message
-                        currentMessageElement.classList.add('active'); // Add active class for blinking
-                        
-                        // Apply warp effect
-                        warpText(currentMessageElement, originalText, 40, 60); // Faster warp effect
+                // Fade out preloader and reveal main content
+                preloader.classList.add('fade-out');
+                mainContent.style.opacity = '0'; // Ensure content is hidden before boot-up animation starts
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    mainContent.style.opacity = '1'; // Make main content visible for its animations
 
-                        messageIndex++;
-                        setTimeout(showNextMessage, messageDisplayDuration);
-                    } else {
-                        // All messages shown, now fade out preloader
-                        preloader.classList.add('fade-out');
+                    bootUpItems.forEach((item, index) => {
                         setTimeout(() => {
-                            preloader.style.display = 'none';
+                            item.classList.add('is-visible');
+                        }, index * 200);
+                    });
 
-                            // Staggered fade-in for each boot-up item
-                            bootUpItems.forEach((item, index) => {
-                                setTimeout(() => {
-                                    item.classList.add('is-visible');
-                                }, index * 150); // 150ms delay between each item
-                            });
-
-                            // Animate numbers after content is visible
-                            animateNumber('coffee-count', 723);
-                            animateNumber('projects-count', 23);
-                            animateNumber('visits-count', 87283);
-
-                        }, 1000); // Wait for preloader fade-out
-                    }
-                };
-
-                // Start the sequence of messages
-                showNextMessage();
+                    setTimeout(() => {
+                        animateNumber('coffee-count', 723);
+                        // Call the new function to fetch and animate GitHub repo count
+                        fetchGitHubRepoCount(); 
+                        animateNumber('visits-count', 87283);
+                    }, (bootUpItems.length * 200) + 500);
+                }, 1500);
             });
         });
     </script>
