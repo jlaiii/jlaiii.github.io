@@ -642,6 +642,30 @@
             createCodeCharacter();
         }
 
+        // --- NEW: Fake Visitor Count Logic ---
+        function updateFakeVisitorCount() {
+            // Set your start date and time
+            const startDate = new Date('2025-08-27T11:35:00Z'); // Matches the current time of generation
+            const startVisitors = 87283;
+            const visitorsPerSecond = 52 / 3600; // 52 visitors per hour divided by 3600 seconds
+
+            // Get the current date and time
+            const now = new Date();
+
+            // Calculate the time difference in seconds
+            const timeDifferenceInSeconds = (now.getTime() - startDate.getTime()) / 1000;
+
+            // Calculate the new visitor count
+            const newVisitorCount = Math.floor(startVisitors + (timeDifferenceInSeconds * visitorsPerSecond));
+
+            const visitsCountElement = document.getElementById('visits-count');
+            if (visitsCountElement) {
+                // Animate the number to the new value
+                animateNumber('visits-count', newVisitorCount);
+            }
+        }
+
+
         // Preloader and Boot-up Logic
         document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
@@ -660,6 +684,7 @@
                 "WELCOME, USER."
             ];
 
+            // Use the base URL for the sound file
             const bootSound = new Audio('https://files.catbox.moe/7p0fk4.mp3');
             bootSound.volume = 0.5;
             bootSound.playbackRate = 1.1;
@@ -704,9 +729,8 @@
 
                     setTimeout(() => {
                         animateNumber('coffee-count', 723);
-                        // Call the new function to fetch and animate GitHub repo count
                         fetchGitHubRepoCount(); 
-                        animateNumber('visits-count', 87283);
+                        updateFakeVisitorCount(); // Call the new function to update the visitor count
                     }, (bootUpItems.length * 200) + 500);
                 }, 1500);
             });
