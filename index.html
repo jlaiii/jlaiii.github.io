@@ -26,16 +26,15 @@
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Changed to start from top for scrolling */
             align-items: center;
-            min-height: 100vh; /* Ensures full viewport height */
+            min-height: 100vh;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
             position: relative;
-            overflow: hidden; /* Hide scrollbars, especially for rain */
+            /* REMOVED: overflow: hidden; */ /* This was the culprit */
             color: var(--text-light);
-            /* Anti-aliasing for smoother text rendering */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -49,10 +48,20 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at center, rgba(0, 230, 118, 0.03) 0%, transparent 70%);
-            z-index: -2; /* Below content, above rain */
-            pointer-events: none; /* Allows clicks through */
+            z-index: -2;
+            pointer-events: none;
         }
-
+        
+        /* New rule for the main content container */
+        .main-content-wrapper {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1rem; /* Added padding to prevent content from touching screen edges */
+        }
+        
         /* Matrix Style Falling Code Background - Enhanced and Subtler */
         .code-rain-container {
             position: fixed;
@@ -61,22 +70,21 @@
             width: 100%;
             height: 100%;
             background-color: transparent;
-            z-index: -1; /* Below content */
+            z-index: -1;
             pointer-events: none;
-            overflow: hidden;
+            overflow: hidden; /* Kept here so the rain itself doesn't cause overflow */
             font-family: 'Roboto Mono', monospace;
-            color: var(--primary-green); /* Bright green for matrix code */
-            filter: blur(0.3px); /* Subtler blur for atmospheric effect */
+            color: var(--primary-green);
+            filter: blur(0.3px);
         }
 
         .code-character {
             position: absolute;
-            opacity: var(--initial-opacity, 0.5); /* More subtle opacity */
-            font-size: var(--font-size, 1rem); /* Variable font size for depth */
+            opacity: var(--initial-opacity, 0.5);
+            font-size: var(--font-size, 1rem);
             animation: fall var(--fall-duration, 12s) linear infinite;
-            text-shadow: 0 0 3px var(--primary-green); /* Subtler glow */
-            /* Random color variation for more visual interest (green to greenish-cyan) */
-            color: hsl(calc(120 + var(--hue-offset, 0)), 100%, 70%); /* Start at green (120deg hue), shift up to 30deg */
+            text-shadow: 0 0 3px var(--primary-green);
+            color: hsl(calc(120 + var(--hue-offset, 0)), 100%, 70%);
         }
 
         @keyframes fall {
@@ -86,42 +94,42 @@
             }
             100% {
                 transform: translateY(100vh);
-                opacity: 0.05; /* Fade out significantly at bottom */
+                opacity: 0.05;
             }
         }
 
         /* Card Styling */
         .card {
             background-color: var(--card-bg);
-            border-radius: 0.75rem; /* Slightly more rounded corners */
+            border-radius: 0.75rem;
             padding: 3rem;
-            box-shadow: 0 0 25px var(--shadow-strong), inset 0 0 10px var(--shadow-subtle); /* Refined glow */
-            border: 1px solid var(--primary-green); /* Cleaner, crisp border */
+            box-shadow: 0 0 25px var(--shadow-strong), inset 0 0 10px var(--shadow-subtle);
+            border: 1px solid var(--primary-green);
             width: 100%;
-            max-width: 600px; /* Slightly wider cards for more content */
+            max-width: 600px;
             text-align: center;
-            z-index: 1; /* Above background effects */
+            z-index: 1;
             position: relative;
-            backdrop-filter: blur(5px); /* More pronounced blur effect behind card */
+            backdrop-filter: blur(5px);
             margin-bottom: 2.5rem;
-            transition: all 0.4s ease-out; /* Smooth transition for hover effects */
+            transition: all 0.4s ease-out;
         }
 
         .card:hover {
-             box-shadow: 0 0 35px var(--shadow-strong), inset 0 0 15px var(--shadow-subtle); /* Stronger glow on hover */
-             transform: translateY(-2px); /* Subtle lift on hover */
+             box-shadow: 0 0 35px var(--shadow-strong), inset 0 0 15px var(--shadow-subtle);
+             transform: translateY(-2px);
         }
 
         .links-card {
-            margin-top: 2.5rem; /* Explicit space between cards */
+            margin-top: 2.5rem;
         }
 
         /* Glitch Effect for Main Title */
         .glitch {
             font-family: 'Roboto Mono', monospace;
             position: relative;
-            animation: glitch-anim 2s infinite alternate ease-in-out; /* Smoother, slightly longer glitch cycle */
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8); /* Stronger initial glow */
+            animation: glitch-anim 2s infinite alternate ease-in-out;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
             color: var(--primary-green);
         }
 
@@ -179,7 +187,7 @@
             }
             100% {
                 transform: translate(0, 0);
-                text-shadow: 0 0 10px var(--primary-green); /* Return to normal glow */
+                text-shadow: 0 0 10px var(--primary-green);
                 opacity: 1;
             }
         }
@@ -187,18 +195,18 @@
         /* Stats Number and Label Styling */
         .stat-number {
             font-family: 'Roboto Mono', monospace;
-            font-size: 3rem; /* Larger font for emphasis */
+            font-size: 3rem;
             font-weight: 700;
-            color: var(--secondary-cyan); /* Cyan for numbers */
+            color: var(--secondary-cyan);
             line-height: 1;
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Cyan glow */
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
         }
 
         .stat-label {
             font-family: 'Inter', sans-serif;
             font-size: 1.1rem;
-            color: var(--text-subtle); /* Subtler grey for labels */
+            color: var(--text-subtle);
         }
 
         /* Link Item Styling */
@@ -206,53 +214,53 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba(30, 40, 55, 0.8); /* Darker background for each link */
-            padding: 0.85rem 1.75rem; /* Adjusted padding for a modern button feel */
-            border-radius: 0.5rem; /* More rounded corners */
-            border: 1px solid var(--primary-green); /* Green border for links */
-            transition: all 0.3s ease; /* Smooth transitions for all properties */
+            background-color: rgba(30, 40, 55, 0.8);
+            padding: 0.85rem 1.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--primary-green);
+            transition: all 0.3s ease;
             text-decoration: none;
             color: var(--text-light);
             font-family: 'Roboto Mono', monospace;
-            font-size: 1.15rem; /* Slightly larger font */
-            box-shadow: 0 0 8px var(--shadow-subtle); /* Subtle glow */
+            font-size: 1.15rem;
+            box-shadow: 0 0 8px var(--shadow-subtle);
         }
 
         .link-item:hover {
-            background-color: rgba(0, 230, 118, 0.15); /* Lighter green on hover */
-            border-color: var(--primary-green); /* Brighter green border on hover */
-            box-shadow: 0 0 20px var(--shadow-strong); /* Stronger glow on hover */
-            color: var(--primary-green); /* Green text on hover */
-            transform: translateY(-5px) scale(1.02); /* More pronounced lift and slight scale */
+            background-color: rgba(0, 230, 118, 0.15);
+            border-color: var(--primary-green);
+            box-shadow: 0 0 20px var(--shadow-strong);
+            color: var(--primary-green);
+            transform: translateY(-5px) scale(1.02);
         }
 
         .link-item i {
-            margin-right: 0.85rem; /* Space between icon and text */
-            color: var(--secondary-cyan); /* Cyan icon color */
-            text-shadow: 0 0 8px rgba(0, 255, 255, 0.7); /* Cyan glow for icons */
-            transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth icon transitions */
+            margin-right: 0.85rem;
+            color: var(--secondary-cyan);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         .link-item:hover i {
-            color: var(--primary-green); /* Icon color matches text on hover */
+            color: var(--primary-green);
             text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
         }
 
         /* Visits Section Styling */
         .visits-section {
-            margin-top: auto; /* Pushes it to the bottom of the flex container */
+            margin-top: auto;
             text-align: center;
             padding-top: 2rem;
-            z-index: 1; /* Keep it above background effects */
+            z-index: 1;
             color: var(--text-subtle);
             font-family: 'Roboto Mono', monospace;
-            font-size: 0.95rem; /* Slightly larger font size */
-            opacity: 0.8; /* Less transparent */
-            transition: opacity 0.8s ease-out; /* Smooth transition for boot-up */
+            font-size: 0.95rem;
+            opacity: 0.8;
+            transition: opacity 0.8s ease-out;
         }
 
         .visits-section .stat-number {
-            font-size: 1.6rem; /* Slightly larger number for visits count */
+            font-size: 1.6rem;
             display: block;
             margin-bottom: 0.3rem;
             color: var(--secondary-cyan);
@@ -260,26 +268,33 @@
         }
 
         .visits-section .stat-label {
-            font-size: 0.85rem; /* Slightly larger label */
+            font-size: 0.85rem;
             color: var(--text-subtle);
+        }
+        
+        /* Ensure main content is centered on larger screens */
+        @media (min-width: 769px) {
+            body {
+                justify-content: center;
+            }
         }
 
         /* Responsive adjustments for mobile devices */
         @media (max-width: 768px) {
             .card {
-                padding: 2rem;
-                max-width: 90%; /* Occupy more width on smaller screens */
+                padding: 2rem 1.5rem; /* Adjusted padding for better fit on small screens */
+                max-width: 90%;
             }
             .stat-number {
                 font-size: 2.5rem;
             }
             .stats-grid {
-                flex-direction: column; /* Stack stats vertically */
-                gap: 2.5rem; /* Increased gap for mobile */
+                flex-direction: column;
+                gap: 2.5rem;
             }
             .links-grid {
-                flex-direction: column; /* Stack links vertically */
-                gap: 1.2rem; /* Slightly closer links on mobile */
+                flex-direction: column;
+                gap: 1.2rem;
             }
             .link-item {
                 padding: 0.7rem 1.2rem;
@@ -306,12 +321,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* A simple base64 encoded grain pattern (small, repeats) */
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEUAAAAaGhohISElJSUbGxskJCQbGxshISElJSUgICAlJSUbGxshISElJSUbGxskJCQkJCQEtXh7AAAAHnRSTlMACAgICAgICAgICAgICAgICAgICAgICAgICAgIC/M7jXkAAABmSURBVDjL7dJBDsAgDATBu0k3d/r/rD1fGBJTCq8g+R92vLzN9rQy1iYxPzY2cDBrB/yQkC+B+H9fS+ZfUvz4PzS/h+bFzW/n7d8e2vjC2sR5/d2f3/z4/h8HAAAAAP+nIw+5y/sC+gAAAABJRU5ErkJggg==');
-            background-size: 100px; /* How big each grain tile is */
-            opacity: 0.06; /* Even subtler grain */
+            background-size: 100px;
+            opacity: 0.06;
             pointer-events: none;
-            z-index: 1000; /* Above content */
+            z-index: 1000;
         }
 
         .scanlines-overlay {
@@ -320,11 +334,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Creates thin horizontal lines */
             background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.15) 51%);
-            background-size: 100% 3px; /* Thinner scanlines, 3px high per line set */
+            background-size: 100% 3px;
             pointer-events: none;
-            z-index: 1001; /* Above grain */
+            z-index: 1001;
         }
 
         /* Preloader/Enter Screen */
@@ -339,14 +352,14 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999; /* Highest z-index to cover everything */
-            transition: opacity 1.5s ease-out; /* Slower fade-out transition */
+            z-index: 9999;
+            transition: opacity 1.5s ease-out;
             opacity: 1;
         }
 
         .preloader.fade-out {
             opacity: 0;
-            pointer-events: none; /* Disable interaction after fading out */
+            pointer-events: none;
         }
 
         .enter-button {
@@ -354,38 +367,38 @@
             color: var(--bg-color);
             border: 2px solid var(--primary-green);
             padding: 1.2rem 3.5rem;
-            font-size: 2rem; /* Larger button text */
+            font-size: 2rem;
             font-family: 'Roboto Mono', monospace;
             cursor: pointer;
-            border-radius: 0.75rem; /* More rounded */
-            transition: all 0.4s ease; /* Smooth transition for hover effects */
+            border-radius: 0.75rem;
+            transition: all 0.4s ease;
             box-shadow: 0 0 20px var(--shadow-strong);
-            text-transform: uppercase; /* All caps */
+            text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.05em; /* Spaced out letters */
+            letter-spacing: 0.05em;
         }
 
         .enter-button:hover {
-            background-color: var(--primary-green); /* Stays green */
-            color: var(--bg-color); /* Stays dark */
-            box-shadow: 0 0 30px var(--shadow-strong); /* Stronger glow */
-            transform: scale(1.08) rotateX(2deg); /* More dynamic hover effect */
+            background-color: var(--primary-green);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--shadow-strong);
+            transform: scale(1.08) rotateX(2deg);
         }
 
         .loading-text {
             font-family: 'Roboto Mono', monospace;
             color: var(--primary-green);
-            font-size: 1.6rem; /* Slightly larger */
-            margin-top: 2.5rem; /* More space */
-            display: none; /* Hidden by default, shown by JS */
-            position: absolute; /* Allows messages to overlap cleanly */
+            font-size: 1.6rem;
+            margin-top: 2.5rem;
+            display: none;
+            position: absolute;
             text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
         }
         
         /* Blinking cursor for typing effect */
         .loading-text .cursor {
-            display: inline-block; /* Allows cursor to blink next to typed text */
-            animation: blinking-cursor 0.7s infinite steps(1) alternate; /* Simulate typing cursor blink */
+            display: inline-block;
+            animation: blinking-cursor 0.7s infinite steps(1) alternate;
         }
 
         @keyframes blinking-cursor {
@@ -395,9 +408,9 @@
 
         /* Content Boot-up Animation for individual elements */
         .boot-up-item {
-            opacity: 0; /* Hidden by default */
-            transform: translateY(30px); /* Start further down */
-            transition: opacity 1s ease-out, transform 1s ease-out; /* Slower transition for a smoother reveal */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
         }
 
         .boot-up-item.is-visible {
@@ -409,7 +422,6 @@
 <body>
     <div class="preloader" id="preloader">
         <button class="enter-button" id="enter-button">ACCESS TERMINAL</button>
-        <!-- Container for the typing message and cursor -->
         <div class="loading-text" id="booting-message-container">
             <span id="booting-message-typed"></span><span class="cursor">_</span>
         </div>
@@ -420,8 +432,7 @@
     <div class="film-grain-overlay"></div>
     <div class="scanlines-overlay"></div>
 
-    <!-- Main content container, initially hidden for fade-in -->
-    <div class="flex flex-col items-center w-full min-h-screen" id="main-content" style="opacity:0;">
+    <div class="main-content-wrapper flex flex-col items-center w-full min-h-screen" id="main-content" style="opacity:0;">
         <div class="card profile-card boot-up-item mb-8">
             <h1 class="text-4xl sm:text-5xl font-bold mb-4 glitch">[ JLAIII ]</h1>
             <p class="text-xl sm:text-2xl mb-6 text-cyan-300 boot-up-item" style="font-family: 'Roboto Mono', monospace; text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);">
