@@ -1,740 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jlaiii's Digital Profile // Access Granted</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Define CSS Variables for a cleaner, consistent theme */
-        :root {
-            --bg-color: #0A1016; /* Even darker, slightly blue-black */
-            --card-bg: rgba(20, 28, 38, 0.95); /* Dark blue-grey, higher opacity */
-            --primary-green: #00E676; /* Vibrant, almost neon green */
-            --secondary-cyan: #00FFFF; /* Pure cyan */
-            --text-light: #E0E6EF; /* Light grey-blue */
-            --text-subtle: #8899AA; /* Medium grey-blue */
-            --border-glow: rgba(0, 230, 118, 0.5); /* Glow based on primary green */
-            --shadow-strong: rgba(0, 230, 118, 0.4);
-            --shadow-subtle: rgba(0, 230, 118, 0.15);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jose (Jay) Luis Alvarez III — IT Specialist & Developer</title>
+  <meta name="description" content="Portfolio of Jose (Jay) Luis Alvarez III — IT Support Specialist, Developer, and Pipefitter. 61 GitHub projects, 12+ years freelance tech support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --bg-2: #111318;
+      --bg-3: #1a1d24;
+      --text: #e4e6eb;
+      --text-2: #9ba3af;
+      --accent: #3b82f6;
+      --accent-2: #60a5fa;
+      --border: #23262e;
+      --success: #22c55e;
+      --warn: #f59e0b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Changed to start from top for scrolling */
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            position: relative;
-            /* REMOVED: overflow: hidden; */ /* This was the culprit */
-            color: var(--text-light);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,13,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .logo { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 24px; list-style: none; font-size: 0.9rem; font-weight: 500; }
+    .nav-links a { color: var(--text-2); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; }
 
-        /* Subtle Radial Gradient for Depth on background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 230, 118, 0.03) 0%, transparent 70%);
-            z-index: -2;
-            pointer-events: none;
-        }
-        
-        /* New rule for the main content container */
-        .main-content-wrapper {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 1rem; /* Added padding to prevent content from touching screen edges */
-        }
-        
-        /* Matrix Style Falling Code Background - Enhanced and Subtler */
-        .code-rain-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden; /* Kept here so the rain itself doesn't cause overflow */
-            font-family: 'Roboto Mono', monospace;
-            color: var(--primary-green);
-            filter: blur(0.3px);
-        }
+    /* Hero */
+    .hero { padding: 80px 0 60px; text-align: center; }
+    .hero-img {
+      width: 140px; height: 140px; border-radius: 50%;
+      object-fit: cover; border: 3px solid var(--accent);
+      box-shadow: 0 0 40px rgba(59,130,246,0.15);
+      margin-bottom: 24px;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .hero .title { font-size: 1.15rem; color: var(--text-2); margin-bottom: 16px; }
+    .hero .meta { font-size: 0.9rem; color: var(--text-2); margin-bottom: 24px; }
+    .hero .meta span { margin: 0 8px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-3); border: 1px solid var(--border); padding: 6px 14px; border-radius: 999px; font-size: 0.82rem; font-weight: 500; color: var(--text-2); }
+    .badge svg { width: 14px; height: 14px; color: var(--success); }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+      transition: all 0.2s; border: 1px solid transparent; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #2563eb; text-decoration: none; }
+    .btn-outline { background: transparent; border-color: var(--border); color: var(--text); }
+    .btn-outline:hover { background: var(--bg-3); text-decoration: none; }
 
-        .code-character {
-            position: absolute;
-            opacity: var(--initial-opacity, 0.5);
-            font-size: var(--font-size, 1rem);
-            animation: fall var(--fall-duration, 12s) linear infinite;
-            text-shadow: 0 0 3px var(--primary-green);
-            color: hsl(calc(120 + var(--hue-offset, 0)), 100%, 70%);
-        }
+    /* Stats */
+    .stats { padding: 40px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px 20px; text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent-2); line-height: 1; }
+    .stat-label { font-size: 0.82rem; color: var(--text-2); margin-top: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
 
-        @keyframes fall {
-            0% {
-                transform: translateY(-100%);
-                opacity: var(--initial-opacity, 0.5);
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0.05;
-            }
-        }
+    /* Sections */
+    .section { padding: 60px 0; }
+    .section-title {
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 32px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after {
+      content: ''; flex: 1; height: 1px; background: var(--border); margin-left: 8px;
+    }
 
-        /* Card Styling */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 0.75rem;
-            padding: 3rem;
-            box-shadow: 0 0 25px var(--shadow-strong), inset 0 0 10px var(--shadow-subtle);
-            border: 1px solid var(--primary-green);
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-            z-index: 1;
-            position: relative;
-            backdrop-filter: blur(5px);
-            margin-bottom: 2.5rem;
-            transition: all 0.4s ease-out;
-        }
+    /* About */
+    .about-text { color: var(--text-2); font-size: 1rem; max-width: 800px; }
+    .about-text p + p { margin-top: 14px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .skill-tag {
+      background: var(--bg-3); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 6px; font-size: 0.82rem;
+      font-weight: 500; color: var(--text-2); transition: all 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--text); }
 
-        .card:hover {
-             box-shadow: 0 0 35px var(--shadow-strong), inset 0 0 15px var(--shadow-subtle);
-             transform: translateY(-2px);
-        }
+    /* Experience */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
+      width: 2px; background: var(--border);
+    }
+    .job { position: relative; padding-left: 36px; padding-bottom: 32px; }
+    .job:last-child { padding-bottom: 0; }
+    .job::before {
+      content: ''; position: absolute; left: 0; top: 6px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--bg); border: 3px solid var(--accent);
+    }
+    .job-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+    .job-title { font-weight: 700; font-size: 1rem; }
+    .job-company { color: var(--text-2); font-size: 0.9rem; }
+    .job-date { font-size: 0.82rem; color: var(--text-2); font-weight: 500; }
+    .job-desc { font-size: 0.9rem; color: var(--text-2); margin-top: 8px; line-height: 1.7; }
+    .job-meta { font-size: 0.78rem; color: var(--text-2); margin-top: 6px; font-weight: 500; }
 
-        .links-card {
-            margin-top: 2.5rem;
-        }
+    /* Education / Certs */
+    .edu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .edu-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .edu-card h4 { font-weight: 700; font-size: 0.98rem; margin-bottom: 4px; }
+    .edu-card .org { font-size: 0.85rem; color: var(--text-2); margin-bottom: 4px; }
+    .edu-card .date { font-size: 0.78rem; color: var(--text-2); font-weight: 500; }
 
-        /* Glitch Effect for Main Title */
-        .glitch {
-            font-family: 'Roboto Mono', monospace;
-            position: relative;
-            animation: glitch-anim 2s infinite alternate ease-in-out;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
-            color: var(--primary-green);
-        }
+    /* Projects */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .project-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; display: flex; flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .project-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .project-name { font-weight: 700; font-size: 0.95rem; word-break: break-word; }
+    .project-stars { display: inline-flex; align-items: center; gap: 4px; font-size: 0.8rem; color: var(--warn); font-weight: 600; }
+    .project-desc { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; flex: 1; margin-bottom: 12px; }
+    .project-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; }
+    .project-lang { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; color: var(--text-2); }
+    .lang-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .project-link { color: var(--accent-2); font-weight: 600; }
+    .project-link:hover { text-decoration: underline; }
 
-        /* Refined Glitch Animation Keyframes */
-        @keyframes glitch-anim {
-            0% {
-                transform: translate(0, 0);
-                text-shadow: 0 0 10px var(--primary-green);
-                opacity: 1;
-            }
-            10% {
-                transform: translate(-3px, 2px);
-                text-shadow: 0.03em 0.02em 0 rgba(255, 0, 0, 0.7), -0.02em -0.03em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.9;
-            }
-            20% {
-                transform: translate(4px, -3px);
-                text-shadow: -0.02em 0.04em 0 rgba(255, 0, 0, 0.7), 0.04em -0.02em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.88;
-            }
-            30% {
-                transform: translate(-5px, 1px);
-                text-shadow: 0.05em -0.01em 0 rgba(255, 0, 0, 0.7), -0.01em 0.05em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.92;
-            }
-            40% {
-                transform: translate(2px, -4px);
-                text-shadow: -0.01em -0.04em 0 rgba(255, 0, 0, 0.7), 0.04em 0.01em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.85;
-            }
-            50% {
-                transform: translate(-4px, 3px);
-                text-shadow: 0.04em 0.03em 0 rgba(255, 0, 0, 0.7), -0.03em -0.04em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.9;
-            }
-            60% {
-                transform: translate(1px, -2px);
-                text-shadow: -0.02em 0.02em 0 rgba(255, 0, 0, 0.7), 0.02em -0.02em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.95;
-            }
-            70% {
-                transform: translate(-3px, 5px);
-                text-shadow: 0.03em 0.05em 0 rgba(255, 0, 0, 0.7), -0.05em -0.03em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.87;
-            }
-            80% {
-                transform: translate(4px, -1px);
-                text-shadow: -0.04em -0.01em 0 rgba(255, 0, 0, 0.7), 0.01em 0.04em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.93;
-            }
-            90% {
-                transform: translate(-2px, 2px);
-                text-shadow: 0.02em 0.02em 0 rgba(255, 0, 0, 0.7), -0.02em -0.02em 0 rgba(0, 255, 255, 0.7);
-                opacity: 0.89;
-            }
-            100% {
-                transform: translate(0, 0);
-                text-shadow: 0 0 10px var(--primary-green);
-                opacity: 1;
-            }
-        }
+    /* Footer */
+    footer { padding: 40px 0; text-align: center; border-top: 1px solid var(--border); margin-top: 40px; }
+    footer p { font-size: 0.85rem; color: var(--text-2); }
+    .socials { display: flex; gap: 16px; justify-content: center; margin-top: 16px; }
+    .socials a {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 8px; background: var(--bg-2);
+      border: 1px solid var(--border); font-size: 0.85rem; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .socials a:hover { background: var(--bg-3); text-decoration: none; }
 
-        /* Stats Number and Label Styling */
-        .stat-number {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--secondary-cyan);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
-        }
-
-        .stat-label {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            color: var(--text-subtle);
-        }
-
-        /* Link Item Styling */
-        .link-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(30, 40, 55, 0.8);
-            padding: 0.85rem 1.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid var(--primary-green);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: var(--text-light);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.15rem;
-            box-shadow: 0 0 8px var(--shadow-subtle);
-        }
-
-        .link-item:hover {
-            background-color: rgba(0, 230, 118, 0.15);
-            border-color: var(--primary-green);
-            box-shadow: 0 0 20px var(--shadow-strong);
-            color: var(--primary-green);
-            transform: translateY(-5px) scale(1.02);
-        }
-
-        .link-item i {
-            margin-right: 0.85rem;
-            color: var(--secondary-cyan);
-            text-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
-
-        .link-item:hover i {
-            color: var(--primary-green);
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
-        }
-
-        /* Visits Section Styling */
-        .visits-section {
-            margin-top: auto;
-            text-align: center;
-            padding-top: 2rem;
-            z-index: 1;
-            color: var(--text-subtle);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.95rem;
-            opacity: 0.8;
-            transition: opacity 0.8s ease-out;
-        }
-
-        .visits-section .stat-number {
-            font-size: 1.6rem;
-            display: block;
-            margin-bottom: 0.3rem;
-            color: var(--secondary-cyan);
-            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
-        }
-
-        .visits-section .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-subtle);
-        }
-        
-        /* Ensure main content is centered on larger screens */
-        @media (min-width: 769px) {
-            body {
-                justify-content: center;
-            }
-        }
-
-        /* Responsive adjustments for mobile devices */
-        @media (max-width: 768px) {
-            .card {
-                padding: 2rem 1.5rem; /* Adjusted padding for better fit on small screens */
-                max-width: 90%;
-            }
-            .stat-number {
-                font-size: 2.5rem;
-            }
-            .stats-grid {
-                flex-direction: column;
-                gap: 2.5rem;
-            }
-            .links-grid {
-                flex-direction: column;
-                gap: 1.2rem;
-            }
-            .link-item {
-                padding: 0.7rem 1.2rem;
-                font-size: 1.05rem;
-            }
-            .link-item i {
-                font-size: 1.3rem;
-            }
-            .visits-section {
-                padding-top: 1.5rem;
-            }
-            .visits-section .stat-number {
-                font-size: 1.3rem;
-            }
-            .visits-section .stat-label {
-                font-size: 0.75rem;
-            }
-        }
-
-        /* Movie-like Effects: Film Grain & Scanlines overlays */
-        .film-grain-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEUAAAAaGhohISElJSUbGxskJCQbGxshISElJSUgICAlJSUbGxshISElJSUbGxskJCQkJCQEtXh7AAAAHnRSTlMACAgICAgICAgICAgICAgICAgICAgICAgICAgIC/M7jXkAAABmSURBVDjL7dJBDsAgDATBu0k3d/r/rD1fGBJTCq8g+R92vLzN9rQy1iYxPzY2cDBrB/yQkC+B+H9fS+ZfUvz4PzS/h+bFzW/n7d8e2vjC2sR5/d2f3/z4/h8HAAAAAP+nIw+5y/sC+gAAAABJRU5ErkJggg==');
-            background-size: 100px;
-            opacity: 0.06;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        .scanlines-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.15) 51%);
-            background-size: 100% 3px;
-            pointer-events: none;
-            z-index: 1001;
-        }
-
-        /* Preloader/Enter Screen */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 1.5s ease-out;
-            opacity: 1;
-        }
-
-        .preloader.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .enter-button {
-            background-color: var(--primary-green);
-            color: var(--bg-color);
-            border: 2px solid var(--primary-green);
-            padding: 1.2rem 3.5rem;
-            font-size: 2rem;
-            font-family: 'Roboto Mono', monospace;
-            cursor: pointer;
-            border-radius: 0.75rem;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 20px var(--shadow-strong);
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-        }
-
-        .enter-button:hover {
-            background-color: var(--primary-green);
-            color: var(--bg-color);
-            box-shadow: 0 0 30px var(--shadow-strong);
-            transform: scale(1.08) rotateX(2deg);
-        }
-
-        .loading-text {
-            font-family: 'Roboto Mono', monospace;
-            color: var(--primary-green);
-            font-size: 1.6rem;
-            margin-top: 2.5rem;
-            display: none;
-            position: absolute;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
-        }
-        
-        /* Blinking cursor for typing effect */
-        .loading-text .cursor {
-            display: inline-block;
-            animation: blinking-cursor 0.7s infinite steps(1) alternate;
-        }
-
-        @keyframes blinking-cursor {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Content Boot-up Animation for individual elements */
-        .boot-up-item {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-
-        .boot-up-item.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.7rem; }
+      .hero .title { font-size: 1rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .edu-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg-2); flex-direction: column; padding: 16px 20px; gap: 12px; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .mobile-menu-btn { display: block; }
+      .section { padding: 40px 0; }
+      .hero { padding: 60px 0 40px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="preloader" id="preloader">
-        <button class="enter-button" id="enter-button">ACCESS TERMINAL</button>
-        <div class="loading-text" id="booting-message-container">
-            <span id="booting-message-typed"></span><span class="cursor">_</span>
-        </div>
+
+<nav>
+  <div class="container">
+    <div class="logo">JL3</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <img src="https://i.imgur.com/ag62U1X.jpeg" alt="Jose (Jay) Luis Alvarez III" class="hero-img" loading="eager">
+    <h1>Jose (Jay) Luis Alvarez III</h1>
+    <p class="title">IT Support Specialist & Developer</p>
+    <p class="meta">
+      <span>Brownsville, TX</span>&middot;
+      <span>South Texas College</span>&middot;
+      <span>61 GitHub Repos</span>
+    </p>
+    <span class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Verified Profile
+    </span>
+    <div class="hero-actions">
+      <a href="https://www.linkedin.com/in/jose-luis-alvarez-iii-9809a2171/" target="_blank" rel="noopener" class="btn btn-primary">LinkedIn Profile</a>
+      <a href="https://github.com/jlaiii" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
     </div>
+  </div>
+</section>
 
-    <div class="code-rain-container" id="code-rain-container"></div>
-
-    <div class="film-grain-overlay"></div>
-    <div class="scanlines-overlay"></div>
-
-    <div class="main-content-wrapper flex flex-col items-center w-full min-h-screen" id="main-content" style="opacity:0;">
-        <div class="card profile-card boot-up-item mb-8">
-            <h1 class="text-4xl sm:text-5xl font-bold mb-4 glitch">[ JLAIII ]</h1>
-            <p class="text-xl sm:text-2xl mb-6 text-cyan-300 boot-up-item" style="font-family: 'Roboto Mono', monospace; text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);">
-                > SYSTEM_READY
-            </p>
-            <p class="text-base sm:text-lg text-gray-300 mb-8 boot-up-item">
-                // Enthusiast in systems, automation, and digital security.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-around items-center stats-grid">
-                <div class="stat-item flex flex-col items-center m-4 boot-up-item">
-                    <div class="stat-number" id="coffee-count">0</div>
-                    <div class="stat-label">COFFEE DRANK</div>
-                </div>
-                <div class="stat-item flex flex-col items-center m-4 boot-up-item">
-                    <div class="stat-number" id="projects-count">0</div>
-                    <div class="stat-label">PROJECTS COMPLETED</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card links-card boot-up-item">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-green-400" style="font-family: 'Roboto Mono', monospace; text-shadow: 0 0 10px var(--primary-green);">[ NETWORK INTERFACE ]</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 links-grid">
-                <a href="https://mega.nz/folder/nsZDiBQJ#sZNCM-7zjtWOyHiGMAEUrA" target="_blank" class="link-item boot-up-item">
-                    <i class="fas fa-tools"></i> PC Toolbox
-                </a>
-                <a href="https://github.com/jlaiii" target="_blank" class="link-item boot-up-item">
-                    <i class="fab fa-github"></i> GitHub Profile
-                </a>
-                <a href="https://github.com/jlaiii?tab=repositories" target="_blank" class="link-item boot-up-item">
-                    <i class="fas fa-code-branch"></i> Repositories
-                </a>
-                <a href="mailto:jlaiii@protonmail.com" class="link-item boot-up-item">
-                    <i class="fas fa-envelope"></i> Email Proton
-                </a>
-                <a href="https://t.me/jlaiii" target="_blank" class="link-item boot-up-item">
-                    <i class="fab fa-telegram-plane"></i> Telegram Channel
-                </a>
-                <a href="#" class="link-item boot-up-item">
-                    <i class="fas fa-signal"></i> Signal ID: hzxcp77.54
-                </a>
-            </div>
-        </div>
-
-        <div class="visits-section boot-up-item">
-            <div class="stat-number" id="visits-count">0</div>
-            <div class="stat-label">TOTAL VISITORS</div>
-        </div>
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-num">61</div><div class="stat-label">Repositories</div></div>
+      <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Total Stars</div></div>
+      <div class="stat-card"><div class="stat-num">12+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Followers</div></div>
     </div>
+  </div>
+</section>
 
-    <script>
-        // Set the viewport height initially to prevent mobile address bar issues
-        // and update on resize to ensure full height for background effects
-        function setVhProperty() {
-            let vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }
-        window.addEventListener('resize', setVhProperty);
-        setVhProperty();
+<section class="section" id="about">
+  <div class="container">
+    <h2 class="section-title">About</h2>
+    <div class="about-text">
+      <p>IT Support Specialist with a background in technical support, telecom troubleshooting, and hands-on industrial work. Experienced with Windows systems, ticket documentation, network testing, equipment checks, and practical problem-solving across both remote and on-site environments.</p>
+      <p>Self-taught developer with <strong>61 public repositories</strong> on GitHub spanning Python automation, JavaScript utilities, web tools, PowerShell scripts, and system administration. I build tools that solve real problems — from PGP encryption in the browser to Discord bots, Bitcoin trackers, and industrial utility apps.</p>
+    </div>
+    <div class="skills">
+      <span class="skill-tag">Windows Support</span>
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">PowerShell</span>
+      <span class="skill-tag">Linux</span>
+      <span class="skill-tag">Networking</span>
+      <span class="skill-tag">Telecom Troubleshooting</span>
+      <span class="skill-tag">HTML/CSS</span>
+      <span class="skill-tag">Git & GitHub</span>
+      <span class="skill-tag">Pipefitting</span>
+      <span class="skill-tag">Scaffolding</span>
+      <span class="skill-tag">Safety Procedures</span>
+      <span class="skill-tag">Video Editing</span>
+      <span class="skill-tag">NCCER Certified</span>
+      <span class="skill-tag">Hardware Diagnostics</span>
+    </div>
+  </div>
+</section>
 
-        // Function to "warp" text: scrambles, then resolves to original text
-        function warpText(element, originalText, charScrambleSpeed = 50, charRevealDelay = 60) {
-            const characters = '0123456789!@#$%^&*()_+-=[]{}|;:,.<>/?`~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-            const chars = originalText.split('');
-            let revealedChars = Array(chars.length).fill('');
-            let scrambleIntervalId;
-            let revealTimeoutId;
-            let revealIndex = 0;
+<section class="section" id="experience">
+  <div class="container">
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline">
+      <div class="job">
+        <div class="job-header">
+          <div><div class="job-title">Information Technology Specialist</div><div class="job-company">Freelance</div></div>
+          <div class="job-date">Jan 2014 &ndash; Present &middot; 12 yrs 5 mos</div>
+        </div>
+        <p class="job-desc">Freelance technical support for computers, mobile devices, networking equipment, and general technology issues. Windows OS, software installation, troubleshooting, device setup, system cleanup, formatting, hardware checks, and basic network configuration. Also provide professional media editing for social media, promotional videos, YouTube content, and gaming clips.</p>
+        <div class="job-meta">Remote / Hybrid</div>
+      </div>
+      <div class="job">
+        <div class="job-header">
+          <div><div class="job-title">Pipefitter</div><div class="job-company">JVIC (Zachry Group)</div></div>
+          <div class="job-date">Jan 2025 &ndash; Jan 2026 &middot; 1 yr 1 mo</div>
+        </div>
+        <p class="job-desc">Hands-on pipefitting on industrial construction projects. Measured, cut, threaded, and installed piping systems to spec. Read blueprints, layouts, and schematics. Aligned, fitted, and secured pipes. Ensured safety compliance and coordinated with teams to meet deadlines.</p>
+        <div class="job-meta">Port Sulphur, LA &middot; On-site</div>
+      </div>
+      <div class="job">
+        <div class="job-header">
+          <div><div class="job-title">Pipefitter Helper</div><div class="job-company">JVIC (Zachry Group)</div></div>
+          <div class="job-date">Feb 2023 &ndash; Apr 2024 &middot; 1 yr 3 mos</div>
+        </div>
+        <p class="job-desc">Assisted pipefitters with installation, assembly, and maintenance of industrial piping systems. Supported daily operations by handling materials, preparing tools, and maintaining a safe, organized work environment.</p>
+        <div class="job-meta">Port Sulphur, LA &middot; On-site</div>
+      </div>
+      <div class="job">
+        <div class="job-header">
+          <div><div class="job-title">Scaffold Helper</div><div class="job-company">Turner Industries &middot; Cheniere Energy LNG Project</div></div>
+          <div class="job-date">Jan 2022 &ndash; Jan 2023 &middot; 1 yr 1 mo</div>
+        </div>
+        <p class="job-desc">Hands-on support for scaffolding operations on an LNG construction site. Assisted with assembling and dismantling structures, transported materials and components, ensured structures were secure and compliant with safety standards. Followed strict fall protection and industrial safety protocols.</p>
+        <div class="job-meta">Port Arthur, TX &middot; On-site</div>
+      </div>
+      <div class="job">
+        <div class="job-header">
+          <div><div class="job-title">Technical Support Agent</div><div class="job-company">OneSupport &middot; Frontier Communications</div></div>
+          <div class="job-date">Jan 2017 &ndash; Jan 2021 &middot; 4 yrs 1 mo</div>
+        </div>
+        <p class="job-desc">Provided technical support for Frontier Communications customers. Troubleshot connectivity, modem/router, ONT issues, and service interruptions. Created, reviewed, and updated support tickets with detailed notes, test results, and escalation details. Used backend systems to analyze connection behavior, run tests, and determine root cause.</p>
+        <div class="job-meta">Remote</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            element.textContent = ''; // Clear current content before starting new warp
+<section class="section" id="projects">
+  <div class="container">
+    <h2 class="section-title">Projects <span style="font-size:0.75rem;color:var(--text-2);font-weight:500;">(61 repos on GitHub)</span></h2>
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Top repos injected via JS -->
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+      <a href="https://github.com/jlaiii?tab=repositories" target="_blank" rel="noopener" class="btn btn-outline">View All 61 Repositories &rarr;</a>
+    </div>
+  </div>
+</section>
 
-            const updateScrambledText = () => {
-                let currentDisplay = '';
-                for (let i = 0; i < chars.length; i++) {
-                    if (revealedChars[i] === '') {
-                        currentDisplay += characters.charAt(Math.floor(Math.random() * characters.length));
-                    } else {
-                        currentDisplay += revealedChars[i];
-                    }
-                }
-                element.textContent = currentDisplay;
-            };
+<section class="section" id="education">
+  <div class="container">
+    <h2 class="section-title">Education & Certifications</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <h4>Bachelor of Applied Technology, Computer and Information Technologies</h4>
+        <div class="org">South Texas College</div>
+        <div class="date">Mar 2015 &ndash; Jan 2018</div>
+      </div>
+      <div class="edu-card">
+        <h4>NCCER Pipefitter Certification</h4>
+        <div class="org">NCCER</div>
+        <div class="date">Jan 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            return new Promise(resolve => {
-                // Start the scrambling immediately
-                scrambleIntervalId = setInterval(updateScrambledText, charScrambleSpeed);
+<footer id="contact">
+  <div class="container">
+    <p>Built by Jay &middot; Hosted on <a href="https://jlaiii.github.io">jlaiii.github.io</a> via GitHub Pages</p>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/jose-luis-alvarez-iii-9809a2171/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/jlaiii" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:jlaiii@proton.me">Email</a>
+    </div>
+  </div>
+</footer>
 
-                // Function to reveal one character at a time
-                const revealNextChar = () => {
-                    if (revealIndex < chars.length) {
-                        revealedChars[revealIndex] = chars[revealIndex]; // Set the actual character
-                        updateScrambledText(); // Update the display to show the newly revealed char
-                        revealIndex++;
-                        revealTimeoutId = setTimeout(revealNextChar, charRevealDelay);
-                    } else {
-                        // All characters revealed, stop scrambling
-                        clearInterval(scrambleIntervalId);
-                        element.textContent = originalText; // Ensure final text is exact
-                        resolve();
-                    }
-                };
-                
-                // Start revealing after a tiny initial delay
-                setTimeout(revealNextChar, 100); 
-            });
-        }
+<script>
+  const repos = [
+    {name:"WebPGP",stars:2,lang:"HTML",url:"https://github.com/jlaiii/WebPGP",desc:"Fast, secure, client-side PGP toolset. Key generation, encryption, decryption, signing — all in browser. No servers, no tracking."},
+    {name:"hermes-browser-bridge",stars:1,lang:"JavaScript",url:"https://github.com/jlaiii/hermes-browser-bridge",desc:"CSP-safe remote control for any browser tab. Automate clicks, typing, navigation on sites that block WebSockets."},
+    {name:"Account-Generator",stars:1,lang:"Python",url:"https://github.com/jlaiii/Account-Generator",desc:"Automated account generation utility."},
+    {name:"Omegle-IP-Puller",stars:1,lang:"JavaScript",url:"https://github.com/jlaiii/Omegle-IP-Puller",desc:"IP extraction utility for Omegle video chat sessions."},
+    {name:"DiscordMusicBot",stars:0,lang:"Python",url:"https://github.com/jlaiii/DiscordMusicBot",desc:"Multi-guild Discord music bot with yt-dlp, autoplay, genre biasing, and background download worker."},
+    {name:"Bitcoin Price Tracker",stars:0,lang:"JavaScript",url:"https://github.com/jlaiii/bitcoin-price-tracker",desc:"Live Bitcoin price tracker with full historical data from 2009 to present."},
+    {name:"BattleMetrics Rust Analytics",stars:0,lang:"JavaScript",url:"https://github.com/jlaiii/BattleMetrics-Rust-Analytics",desc:"Professional-grade player analytics and server monitoring for Rust via BattleMetrics."},
+    {name:"hermes-agent-windows",stars:0,lang:"PowerShell",url:"https://github.com/jlaiii/hermes-agent-windows",desc:"One-click Windows installer for Hermes Agent by NousResearch."},
+    {name:"ollama-model-manager",stars:0,lang:"Python",url:"https://github.com/jlaiii/ollama-model-manager",desc:"Interactive Python helper for finding, downloading, and updating Ollama models."},
+    {name:"PowerScript-Manager",stars:0,lang:"PowerShell",url:"https://github.com/jlaiii/PowerScript-Manager",desc:"All-in-one USB/local PowerShell script manager with dynamic menu and offline support."},
+    {name:"Police Scanner Live",stars:0,lang:"HTML",url:"https://github.com/jlaiii/police-scanner-live",desc:"Public safety radio feeds on an interactive map."},
+    {name:"Py-Builder",stars:0,lang:"Python",url:"https://github.com/jlaiii/Py-Builder-Automated-Python-to-EXE-GUI",desc:"Sleek Tkinter utility for converting Python scripts to standalone executables via PyInstaller."},
+    {name:"Rust Force Wipe",stars:0,lang:"HTML",url:"https://github.com/jlaiii/rust-force-wipe",desc:"RUST game force wipe countdown tracker."},
+    {name:"ShadyURL",stars:0,lang:"HTML",url:"https://github.com/jlaiii/ShadyURL",desc:"URL shortener that makes links look sketchy as hell."},
+    {name:"FAC",stars:0,lang:"Python",url:"https://github.com/jlaiii/FAC",desc:"GUI automation tool using computer vision to detect visual elements and interact automatically."}
+  ];
 
-        // Animated Number Counter (smooth count-up)
-        function animateNumber(elementId, targetValue, duration = 1500) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
+  const langColors = {
+    "HTML":"#e34c26","JavaScript":"#f1e05a","Python":"#3572A5","PowerShell":"#012456",
+    "CSS":"#563d7c","Shell":"#89e051","null":"#8b949e"
+  };
 
-            let startTimestamp = null;
-            const startValue = 0;
+  const grid = document.getElementById('projectsGrid');
+  repos.forEach(r => {
+    const dotColor = langColors[r.lang] || '#8b949e';
+    const stars = r.stars > 0 ? `<span class="project-stars">&#9733; ${r.stars}</span>` : '';
+    grid.innerHTML += `
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">${r.name}</div>
+          ${stars}
+        </div>
+        <div class="project-desc">${r.desc}</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot" style="background:${dotColor}"></span>${r.lang || 'N/A'}</span>
+          <a href="${r.url}" target="_blank" rel="noopener" class="project-link">View &rarr;</a>
+        </div>
+      </div>`;
+  });
+</script>
 
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const currentValue = Math.floor(progress * (targetValue - startValue) + startValue);
-                
-                element.textContent = currentValue.toLocaleString();
-
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                } else {
-                    element.textContent = targetValue.toLocaleString();
-                }
-            };
-
-            requestAnimationFrame(step);
-        }
-
-        // --- NEW: Function to fetch GitHub Repo Count ---
-        async function fetchGitHubRepoCount() {
-            try {
-                const username = 'jlaiii'; // Your GitHub username
-                const response = await fetch(`https://api.github.com/users/${username}`);
-                
-                if (!response.ok) {
-                    // Log error if response is not ok (e.g., 404, 500)
-                    console.error(`GitHub API error: ${response.status} ${response.statusText}`);
-                    // Fallback to a default value if API call fails
-                    animateNumber('projects-count', 23); 
-                    return;
-                }
-                
-                const data = await response.json();
-                const repoCount = data.public_repos; // The GitHub API returns 'public_repos'
-                
-                if (typeof repoCount === 'number') {
-                    animateNumber('projects-count', repoCount);
-                } else {
-                    console.warn('GitHub API did not return a valid public_repos number.');
-                    // Fallback if the data structure is unexpected
-                    animateNumber('projects-count', 23); 
-                }
-
-            } catch (error) {
-                console.error('Error fetching GitHub repo count:', error);
-                // Fallback in case of network issues or other errors
-                animateNumber('projects-count', 23);
-            }
-        }
-
-        // --- Code Rain Effect Script ---
-        const codeRainContainer = document.getElementById('code-rain-container');
-        const characters = '0123456789!@#$%^&*()_+-=[]{}|;:,.<>/?`~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        const numberOfCharacters = 400;
-        const minFallDuration = 8;
-        const maxFallDuration = 25;
-
-        function createCodeCharacter() {
-            const char = document.createElement('span');
-            char.classList.add('code-character');
-            char.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
-
-            const startX = Math.random() * 100 + 'vw';
-            const animationDuration = Math.random() * (maxFallDuration - minFallDuration) + minFallDuration;
-            const delay = Math.random() * 8;
-            const initialOpacity = Math.random() * (0.6 - 0.2) + 0.2;
-            const fontSize = Math.random() * (1.3 - 0.6) + 0.6;
-            const hueOffset = Math.random() * 30;
-
-            char.style.left = startX;
-            char.style.setProperty('--fall-duration', animationDuration + 's');
-            char.style.animationDelay = delay + 's';
-            char.style.setProperty('--initial-opacity', initialOpacity);
-            char.style.setProperty('--font-size', fontSize + 'rem');
-            char.style.setProperty('--hue-offset', hueOffset);
-
-            char.style.transform = `translateY(-${Math.random() * 100}%)`;
-
-            char.addEventListener('animationiteration', () => {
-                char.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
-                char.style.left = Math.random() * 100 + 'vw';
-                char.style.setProperty('--fall-duration', (Math.random() * (maxFallDuration - minFallDuration) + minFallDuration) + 's');
-                char.style.animationDelay = '0s';
-                char.style.setProperty('--initial-opacity', Math.random() * (0.6 - 0.2) + 0.2);
-                char.style.setProperty('--font-size', (Math.random() * (1.3 - 0.6) + 0.6) + 'rem');
-                char.style.setProperty('--hue-offset', Math.random() * 30);
-            });
-
-            codeRainContainer.appendChild(char);
-        }
-
-        for (let i = 0; i < numberOfCharacters; i++) {
-            createCodeCharacter();
-        }
-
-        // --- NEW: Fake Visitor Count Logic ---
-        function updateFakeVisitorCount() {
-            // Set your start date and time
-            const startDate = new Date('2025-08-27T11:35:00Z'); // Matches the current time of generation
-            const startVisitors = 87283;
-            const visitorsPerSecond = 52 / 3600; // 52 visitors per hour divided by 3600 seconds
-
-            // Get the current date and time
-            const now = new Date();
-
-            // Calculate the time difference in seconds
-            const timeDifferenceInSeconds = (now.getTime() - startDate.getTime()) / 1000;
-
-            // Calculate the new visitor count
-            const newVisitorCount = Math.floor(startVisitors + (timeDifferenceInSeconds * visitorsPerSecond));
-
-            const visitsCountElement = document.getElementById('visits-count');
-            if (visitsCountElement) {
-                // Animate the number to the new value
-                animateNumber('visits-count', newVisitorCount);
-            }
-        }
-
-
-        // Preloader and Boot-up Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const preloader = document.getElementById('preloader');
-            const enterButton = document.getElementById('enter-button');
-            const mainContent = document.getElementById('main-content');
-            const bootingMessageTyped = document.getElementById('booting-message-typed');
-            const bootingMessageContainer = document.getElementById('booting-message-container');
-            const bootUpItems = document.querySelectorAll('.boot-up-item');
-
-            const bootingMessages = [
-                "INITIATING SECURE PROTOCOL...",
-                "ESTABLISHING NEURAL INTERFACE...",
-                "LOADING CORE MODULES...",
-                "SYNCHRONIZING DATASTREAM...",
-                "ACCESS GRANTED.",
-                "WELCOME, USER."
-            ];
-
-            // Use the base URL for the sound file
-            const bootSound = new Audio('https://files.catbox.moe/7p0fk4.mp3');
-            bootSound.volume = 0.5;
-            bootSound.playbackRate = 1.1;
-
-            enterButton.addEventListener('click', async () => {
-                bootSound.play();
-
-                enterButton.style.opacity = '0';
-                enterButton.style.pointerEvents = 'none';
-                setTimeout(() => enterButton.style.display = 'none', 500);
-
-                bootingMessageContainer.style.display = 'block'; // Show the message container (which includes cursor)
-
-                for (let i = 0; i < bootingMessages.length; i++) {
-                    // Ensure cursor is visible and blinking before typing starts for the new message
-                    document.querySelector('#booting-message-container .cursor').classList.add('active'); 
-
-                    await warpText(bootingMessageTyped, bootingMessages[i]); // Apply warp effect to the message
-
-                    await new Promise(resolve => setTimeout(resolve, 1000)); // Pause briefly after message is fully displayed
-
-                    if (i < bootingMessages.length - 1) {
-                        bootingMessageTyped.textContent = ''; // Clear for next message
-                        // The cursor stays active as it's part of the parent container which is still displayed
-                    }
-                }
-                
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Final pause after last message
-
-                // Fade out preloader and reveal main content
-                preloader.classList.add('fade-out');
-                mainContent.style.opacity = '0'; // Ensure content is hidden before boot-up animation starts
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    mainContent.style.opacity = '1'; // Make main content visible for its animations
-
-                    bootUpItems.forEach((item, index) => {
-                        setTimeout(() => {
-                            item.classList.add('is-visible');
-                        }, index * 200);
-                    });
-
-                    setTimeout(() => {
-                        animateNumber('coffee-count', 723);
-                        fetchGitHubRepoCount(); 
-                        updateFakeVisitorCount(); // Call the new function to update the visitor count
-                    }, (bootUpItems.length * 200) + 500);
-                }, 1500);
-            });
-        });
-    </script>
 </body>
 </html>
