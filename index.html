@@ -35,6 +35,11 @@
       line-height: 1.65; -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
+    #stars {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse at bottom, #0a0a1a 0%, #050505 100%);
+    }
+    .above-stars { position: relative; z-index: 1; }
     ::selection { background: var(--accent); color: #fff; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
@@ -243,6 +248,8 @@
   </style>
 </head>
 <body>
+<canvas id="stars"></canvas>
+<div class="above-stars">
 
 <nav id="navbar">
   <div class="container">
@@ -518,6 +525,84 @@
   const totalStars = repos.reduce((sum, r) => sum + (r.stars || 0), 0);
   document.getElementById('statStars').dataset.count = totalStars;
   document.getElementById('statStars').textContent = totalStars + '+';
+
+  // ── Starfield ──
+  (function() {
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let W, H, stars = [];
+    const count = 180, connDist = 100, mouseDist = 140;
+    let mouse = { x: null, y: null };
+
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.2 + 0.3,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        o: Math.random() * 0.5 + 0.15,
+        pulse: Math.random() * Math.PI * 2
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      // Draw stars
+      stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200,210,255,${s.o + Math.sin(s.pulse) * 0.1})`;
+        ctx.fill();
+      });
+      // Draw connections
+      for (let i = 0; i < stars.length; i++) {
+        for (let j = i + 1; j < stars.length; j++) {
+          const dx = stars[i].x - stars[j].x, dy = stars[i].y - stars[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < connDist) {
+            ctx.beginPath();
+            ctx.moveTo(stars[i].x, stars[i].y);
+            ctx.lineTo(stars[j].x, stars[j].y);
+            ctx.strokeStyle = `rgba(59,130,246,${0.06 * (1 - dist/connDist)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+        // Mouse connections
+        if (mouse.x !== null) {
+          const mdx = stars[i].x - mouse.x, mdy = stars[i].y - mouse.y;
+          const mdist = Math.sqrt(mdx*mdx + mdy*mdy);
+          if (mdist < mouseDist) {
+            ctx.beginPath();
+            ctx.moveTo(stars[i].x, stars[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(59,130,246,${0.1 * (1 - mdist/mouseDist)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      // Update
+      stars.forEach(s => {
+        s.x += s.vx; s.y += s.vy; s.pulse += 0.02;
+        if (s.x < 0 || s.x > W) s.vx *= -1;
+        if (s.y < 0 || s.y > H) s.vy *= -1;
+        if (mouse.x !== null) {
+          const mdx = mouse.x - s.x, mdy = mouse.y - s.y;
+          const md = Math.sqrt(mdx*mdx + mdy*mdy);
+          if (md < mouseDist) { s.vx += mdx * 0.0003; s.vy += mdy * 0.0003; }
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
 </script>
+</div>
 </body>
 </html>
