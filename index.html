@@ -42,6 +42,33 @@
     }
     ::selection { background: var(--accent); color: #fff; }
 
+    /* ── Boot Sequence ── */
+    .boot-overlay {
+      position: fixed; inset: 0; z-index: 10001;
+      background: var(--bg); display: flex; flex-direction: column;
+      justify-content: flex-start; align-items: flex-start; padding: 6vh 6vw;
+      font-family: 'Space Grotesk', 'Courier New', monospace;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .boot-overlay.done { opacity: 0; transform: scale(1.02); pointer-events: none; }
+    .boot-line { font-size: 0.82rem; color: var(--text-3); line-height: 1.9; white-space: pre-wrap; min-height: 1.6em; }
+    .boot-line.ok { color: var(--green); }
+    .boot-line.warn { color: var(--yellow); }
+    .boot-line.accent { color: var(--accent); }
+    .boot-line.dim { color: var(--text-3); }
+    .boot-line .blink { animation: bootBlink 0.8s step-end infinite; }
+    @keyframes bootBlink { 50% { opacity: 0; } }
+    #bootOutput { width: 100%; max-height: calc(100vh - 14vh); overflow-y: auto; flex: 1; }
+    .boot-progress {
+      position: fixed; bottom: 6vh; left: 6vw; right: 6vw; height: 2px; background: var(--border);
+      border-radius: 1px; overflow: hidden; z-index: 10002;
+    }
+    .boot-progress-bar {
+      height: 100%; width: 0%; background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+      transition: width 0.15s linear;
+    }
+
     /* ── CRT / Scanline overlay ── */
     .crt-overlay {
       position: fixed; inset: 0; pointer-events: none; z-index: 9999;
@@ -398,6 +425,12 @@
   </style>
 </head>
 <body>
+
+<!-- Boot Sequence -->
+<div class="boot-overlay" id="bootOverlay">
+  <div id="bootOutput"></div>
+  <div class="boot-progress"><div class="boot-progress-bar" id="bootBar"></div></div>
+</div>
 
 <!-- CRT + Vignette -->
 <div class="crt-overlay"></div>
@@ -809,6 +842,85 @@
     });
   }, { threshold: 0.5 });
   document.querySelectorAll('.glitch').forEach(el => glitchObs.observe(el));
+  // ── BOOT SEQUENCE ──
+  (function() {
+    const seen = sessionStorage.getItem('boot_done');
+    const boot = document.getElementById('bootOverlay');
+    const out = document.getElementById('bootOutput');
+    const bar = document.getElementById('bootBar');
+    const lines = [];
+
+    function add(txt, cls) {
+      const d = document.createElement('div');
+      d.className = 'boot-line ' + (cls||'');
+      d.textContent = txt;
+      out.appendChild(d);
+      out.scrollTop = out.scrollHeight;
+    }
+    function log(t, cls) { lines.push({t, cls}); }
+    function setBar(p) { bar.style.width = p + '%'; }
+
+    log('JL3_SYSTEM_BOOT v4.2.0', 'accent');
+    log('Initializing kernel...', 'dim');
+    log('  [OK] Memory allocator online', 'ok');
+    log('  [OK] Thread pool active (8 workers)', 'ok');
+    log('  [OK] GPU compositor ready', 'ok');
+    log('Mounting portfolio modules...', 'dim');
+    log('  [OK] Particle renderer loaded', 'ok');
+    log('  [OK] Cursor subsystem initialized', 'ok');
+    log('  [OK] DOM observer registered', 'ok');
+    log('Fetching remote telemetry...', 'dim');
+
+    let liveRepos = 0, liveFollowers = 0;
+    const apiPromise = fetch('https://api.github.com/users/jlaiii')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (d) {
+          liveRepos = d.public_repos || 0;
+          liveFollowers = d.followers || 0;
+          log('  [OK] GitHub API handshake complete', 'ok');
+        }
+      })
+      .catch(() => log('  [WARN] GitHub API unreachable', 'warn'));
+
+    log('Decrypting portfolio assets...', 'dim');
+    log('  [OK] Text scramble engine loaded', 'ok');
+    log('  [OK] Glitch shader compiled', 'ok');
+    log('  [OK] 3D tilt physics calibrated', 'ok');
+    log('Calibrating display...', 'dim');
+    log('  [OK] CRT overlay active', 'ok');
+    log('  [OK] Vignette mask applied', 'ok');
+    log('  [OK] Ambient orbs positioned', 'ok');
+
+    async function run() {
+      if (seen) { boot.style.display = 'none'; return; }
+
+      for (let i = 0; i < lines.length; i++) {
+        const l = lines[i];
+        add(l.t, l.cls);
+        setBar(Math.round((i / lines.length) * 85));
+        await new Promise(r => setTimeout(r, 70 + Math.random() * 90));
+      }
+
+      await apiPromise.catch(() => {});
+      await new Promise(r => setTimeout(r, 200));
+      add('', '');
+      add('Profile data synchronized.', 'ok');
+      add('  Repositories: ' + (liveRepos || 61) + '+', 'dim');
+      add('  Followers: ' + (liveFollowers || 4), 'dim');
+      add('', '');
+      const final = document.createElement('div');
+      final.className = 'boot-line accent';
+      final.innerHTML = 'Launching portfolio...<span class="blink">_</span>';
+      out.appendChild(final);
+      setBar(100);
+      await new Promise(r => setTimeout(r, 700));
+      boot.classList.add('done');
+      sessionStorage.setItem('boot_done', '1');
+      setTimeout(() => boot.style.display = 'none', 800);
+    }
+    run();
+  })();
 </script>
 </body>
 </html>
