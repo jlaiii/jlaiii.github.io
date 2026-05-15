@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jose (Jay) Luis Alvarez III — IT Support Specialist</title>
+  <meta name="description" content="IT Support Specialist with 12+ years in technical support, telecom troubleshooting, and hands-on industrial work. Brownsville, TX.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-2: #0a0a0a;
+      --bg-3: #111111;
+      --surface: rgba(255,255,255,0.03);
+      --surface-hover: rgba(255,255,255,0.05);
+      --text: #e8e8e8;
+      --text-2: #a0a0a0;
+      --text-3: #666666;
+      --accent: #3b82f6;
+      --accent-2: #60a5fa;
+      --accent-faint: rgba(59,130,246,0.08);
+      --accent-glow: rgba(59,130,246,0.18);
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 0.95rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: var(--accent-2); }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(5,5,5,0.7);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1024px; margin: 0 auto; padding: 0 28px;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-weight: 800; font-size: 1.1rem; color: var(--text); letter-spacing: -0.03em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--text-2); transition: color 0.2s ease; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; }
+
+    /* Layout */
+    .container { max-width: 1024px; margin: 0 auto; padding: 0 28px; }
+    section { padding: 100px 0; }
+    .section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 48px; }
+    .section-num { font-size: 0.75rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: 0.05em; }
+    .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.03em; color: var(--text); }
+
+    /* Hero */
+    .hero { padding-top: 140px; padding-bottom: 60px; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; }
+    .hero-inner { display: grid; grid-template-columns: 120px 1fr; gap: 32px; align-items: start; }
+    .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-hover); }
+    .hero-content h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 12px; }
+    .hero-content .subtitle { font-size: 1.05rem; color: var(--text-2); margin-bottom: 20px; font-weight: 400; }
+    .hero-content .meta { font-size: 0.82rem; color: var(--text-3); margin-bottom: 28px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+    .hero-content .meta span { display: flex; align-items: center; gap: 6px; }
+    .hero-bio { color: var(--text-2); max-width: 640px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 22px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent; }
+    .btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .btn-primary:hover { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+    .btn-outline { background: transparent; color: var(--text); border-color: var(--border-hover); }
+    .btn-outline:hover { background: var(--surface-hover); border-color: var(--text-3); }
+
+    /* Stats */
+    .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; margin-top: 56px; }
+    .stat-cell { background: var(--bg-2); padding: 28px 20px; text-align: center; }
+    .stat-value { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: var(--text-3); margin-top: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+    .about-text p { color: var(--text-2); margin-bottom: 16px; }
+    .skills-group h4 { font-size: 0.78rem; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-pill { background: var(--surface); border: 1px solid var(--border); padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; color: var(--text-2); transition: all 0.2s ease; }
+    .skill-pill:hover { background: var(--surface-hover); border-color: var(--border-hover); color: var(--text); }
+
+    /* Experience */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-row { display: grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 32px 0; border-bottom: 1px solid var(--border); }
+    .exp-row:first-child { padding-top: 0; }
+    .exp-date { font-size: 0.82rem; color: var(--text-3); font-weight: 500; line-height: 1.5; }
+    .exp-content h3 { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 4px; letter-spacing: -0.01em; }
+    .exp-content .exp-company { font-size: 0.85rem; color: var(--text-2); margin-bottom: 12px; }
+    .exp-content .exp-meta { font-size: 0.78rem; color: var(--text-3); margin-bottom: 12px; }
+    .exp-content p, .exp-content li { font-size: 0.9rem; color: var(--text-2); line-height: 1.7; }
+    .exp-content ul { list-style: none; padding: 0; }
+    .exp-content ul li { position: relative; padding-left: 16px; margin-bottom: 6px; }
+    .exp-content ul li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    .exp-services { margin-top: 12px; }
+    .exp-services h5 { font-size: 0.78rem; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+
+    /* Projects */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 20px; }
+    .project-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); display: flex; flex-direction: column; }
+    .project-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+    .project-card .project-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
+    .project-card h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .project-card p { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; flex: 1; }
+    .project-card .project-meta { display: flex; gap: 16px; margin-top: 16px; font-size: 0.78rem; color: var(--text-3); font-variant-numeric: tabular-nums; }
+    .project-card .project-actions { display: flex; gap: 10px; margin-top: 16px; }
+    .project-card .project-actions a { font-size: 0.8rem; font-weight: 600; padding: 6px 14px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--text-2); transition: all 0.2s ease; }
+    .project-card .project-actions a:hover { background: var(--accent-faint); border-color: var(--accent); color: var(--accent-2); }
+
+    .featured-project { background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 100%); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 32px; }
+    .featured-project .featured-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); background: var(--accent-faint); padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; }
+    .featured-project h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .featured-project p { color: var(--text-2); max-width: 600px; margin-bottom: 16px; }
+
+    /* Education */
+    .edu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .edu-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: all 0.2s ease; }
+    .edu-card:hover { border-color: var(--border-hover); background: var(--bg-3); }
+    .edu-card .edu-period { font-size: 0.78rem; color: var(--text-3); font-weight: 500; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+    .edu-card h3 { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 4px; letter-spacing: -0.01em; }
+    .edu-card .edu-school { font-size: 0.85rem; color: var(--text-2); margin-bottom: 10px; }
+    .edu-card p { font-size: 0.85rem; color: var(--text-3); line-height: 1.6; }
+
+    /* Footer */
+    footer { padding: 100px 0 48px; text-align: center; }
+    .footer-cta { font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 32px; }
+    .footer-cta a { color: var(--text); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 6px; text-decoration-thickness: 2px; transition: all 0.2s ease; }
+    .footer-cta a:hover { color: var(--accent-2); text-decoration-color: var(--accent-2); }
+    .footer-links { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+    .copyright { font-size: 0.78rem; color: var(--text-3); }
+
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: var(--bg-2); border-bottom: 1px solid var(--border); flex-direction: column; padding: 16px 28px; gap: 16px; }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .avatar { margin: 0 auto; }
+      .hero-actions { justify-content: center; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; }
+      .exp-row { grid-template-columns: 1fr; gap: 12px; }
+      .edu-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 0; }
+      .container { padding: 0 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">JL<span>3</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#education" class="nav-link">Education</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQGSCnYvASiMFg/profile-displayphoto-crop_800_800/B56Z4ekp4kIYAM-/0/1778629385979?e=1780531200&v=beta&t=U1rdJ-2wwe1JvYWNdTl3GwMQ5X_BSnXV-8Layjdvp4s" alt="Jose (Jay) Luis Alvarez III" class="avatar">
+      <div class="hero-content">
+        <h1>Jose (Jay) Luis Alvarez III</h1>
+        <p class="subtitle">IT Support Specialist & Technical Problem Solver</p>
+        <p class="meta">
+          <span>Brownsville, TX</span>
+          <span>12+ years experience</span>
+          <span>Open to work</span>
+        </p>
+        <p class="hero-bio">
+          IT Support Specialist with a background in technical support, telecom troubleshooting, and hands-on industrial work. Experienced with Windows systems, ticket documentation, network testing, equipment checks, pipefitting, scaffolding support, safety procedures, and practical problem-solving.
+        </p>
+        <div class="hero-actions">
+          <a href="mailto:jay@example.com" class="btn btn-primary">Get in touch</a>
+          <a href="https://www.linkedin.com/in/jose-luis-alvarez-iii-9809a2171/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+          <a href="https://github.com/jlaiii" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-strip reveal">
+      <div class="stat-cell">
+        <div class="stat-value" data-target="51" data-suffix="+">0</div>
+        <div class="stat-label">Connections</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value" data-target="12" data-suffix="+">0</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value" data-target="0" id="ghRepos">0</div>
+        <div class="stat-label">Repositories</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value" data-target="0" id="ghStars">0</div>
+        <div class="stat-label">GitHub Stars</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2>About</h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I provide freelance technical support for computers, mobile devices, networking equipment, and general technology issues. I specialize in Windows operating systems, software installation, troubleshooting, device setup, system cleanup, formatting, hardware checks, and basic network configuration.</p>
+        <p>Also experienced with Android and iPhone support, including app setup, account setup, basic troubleshooting, device settings, backups, updates, and general phone system support. Familiar with Linux operating systems and able to assist with basic setup, commands, SSH, software installation, troubleshooting, and system configuration.</p>
+        <p>In addition to IT work, I have hands-on industrial experience in pipefitting and scaffolding, working on major projects including the Cheniere Energy LNG Project. Comfortable in both office and field environments.</p>
+      </div>
+      <div class="skills-group">
+        <h4>Technical Skills</h4>
+        <div class="skill-pills">
+          <span class="skill-pill">Windows Support</span>
+          <span class="skill-pill">Hardware Diagnostics</span>
+          <span class="skill-pill">Network Troubleshooting</span>
+          <span class="skill-pill">Router/Modem Config</span>
+          <span class="skill-pill">Linux Basics</span>
+          <span class="skill-pill">SSH</span>
+          <span class="skill-pill">Android/iOS Support</span>
+          <span class="skill-pill">Ticket Documentation</span>
+          <span class="skill-pill">Pipefitting</span>
+          <span class="skill-pill">Industrial Safety</span>
+          <span class="skill-pill">Blueprint Reading</span>
+          <span class="skill-pill">Media Editing</span>
+          <span class="skill-pill">Video Production</span>
+          <span class="skill-pill">NCCER Certified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2>Experience</h2>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-row reveal">
+        <div class="exp-date">Jan 2014 &mdash; Present<br>12 yrs 5 mos</div>
+        <div class="exp-content">
+          <h3>Information Technology Specialist</h3>
+          <p class="exp-company">Freelance</p>
+          <p class="exp-meta">Home / Hybrid</p>
+          <p>I provide freelance technical support for computers, mobile devices, networking equipment, and general technology issues. I specialize in Windows operating systems, software installation, troubleshooting, device setup, system cleanup, formatting, hardware checks, and basic network configuration.</p>
+          <div class="exp-services">
+            <h5>Services</h5>
+            <ul>
+              <li>Windows troubleshooting and setup</li>
+              <li>Application installation and configuration</li>
+              <li>Computer formatting and OS reinstall support</li>
+              <li>Hard drive and storage health checks</li>
+              <li>Internet, Wi-Fi, router, and modem troubleshooting</li>
+              <li>Android and iPhone troubleshooting</li>
+              <li>Linux OS setup and troubleshooting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-date">Jan 2014 &mdash; Present<br>12 yrs 5 mos</div>
+        <div class="exp-content">
+          <h3>Media Editor</h3>
+          <p class="exp-company">Freelance</p>
+          <p>Professional media editing services for videos, social media content, promotional clips, and other digital media projects. Turning raw footage, clips, images, and ideas into clean, polished, and engaging content ready to post or publish.</p>
+          <div class="exp-services">
+            <h5>Capabilities</h5>
+            <ul>
+              <li>Video editing for short-form and long-form content</li>
+              <li>Social media edits for TikTok, Instagram Reels, YouTube Shorts</li>
+              <li>Promotional and brand content</li>
+              <li>Gaming clips and highlight edits</li>
+              <li>Color correction, audio cleanup, music syncing</li>
+              <li>Captions, subtitles, titles, and on-screen text</li>
+              <li>Motion graphics and visual effects</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-date">Jan 2025 &mdash; Jan 2026<br>1 yr 1 mo</div>
+        <div class="exp-content">
+          <h3>Pipefitter</h3>
+          <p class="exp-company">JVIC (Zachry Group)</p>
+          <p class="exp-meta">Port Sulphur, LA &middot; On-site &middot; Full-time</p>
+          <p>Performed hands-on pipefitting work on industrial construction projects.</p>
+          <ul>
+            <li>Measured, cut, threaded, and installed piping systems to specification</li>
+            <li>Read and interpreted blueprints, layouts, and schematics</li>
+            <li>Aligned, fitted, and secured pipes using appropriate tools and techniques</li>
+            <li>Ensured compliance with safety standards and job site regulations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-date">Feb 2023 &mdash; Apr 2024<br>1 yr 3 mos</div>
+        <div class="exp-content">
+          <h3>Pipefitter Helper</h3>
+          <p class="exp-company">JVIC (a Zachry Group company)</p>
+          <p class="exp-meta">Port Sulphur, LA &middot; On-site &middot; Full-time</p>
+          <p>Assisted pipefitters with the installation, assembly, and maintenance of industrial piping systems. Supported daily job site operations by handling materials, preparing tools, and maintaining a safe, organized work environment.</p>
+        </div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-date">Jan 2022 &mdash; Jan 2023<br>1 yr 1 mo</div>
+        <div class="exp-content">
+          <h3>Scaffold Helper</h3>
+          <p class="exp-company">Turner Industries (Cheniere Energy LNG Project)</p>
+          <p class="exp-meta">Port Arthur, TX &middot; On-site &middot; Full-time</p>
+          <p>Provided hands-on support for scaffolding operations on an LNG construction/maintenance site.</p>
+          <ul>
+            <li>Assisted with assembling and dismantling scaffolding structures</li>
+            <li>Transported and staged materials, tools, and scaffold components</li>
+            <li>Helped ensure structures were secure, level, and compliant with safety standards</li>
+            <li>Followed strict industrial safety protocols, including fall protection requirements</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-row reveal">
+        <div class="exp-date">Jan 2017 &mdash; Jan 2021<br>4 yrs 1 mo</div>
+        <div class="exp-content">
+          <h3>Technical Support Representative</h3>
+          <p class="exp-company">OneSupport &mdash; Frontier Communications</p>
+          <p class="exp-meta">Home &middot; Remote &middot; Full-time</p>
+          <p>Provided technical support for Frontier Communications customers through OneSupport. Assisted customers with internet, phone, equipment, and service-related issues while documenting each case clearly and accurately.</p>
+          <ul>
+            <li>Handled troubleshooting for connectivity issues, slow speeds, outages, modem/router problems</li>
+            <li>Created, submitted, reviewed, and updated support tickets with detailed notes</li>
+            <li>Used backend systems to review customer equipment, service status, and network activity</li>
+            <li>Escalated unresolved issues and ensured tickets had correct information for technicians</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2>Projects</h2>
+    </div>
+
+    <div class="featured-project reveal">
+      <span class="featured-tag">Featured</span>
+      <h3>Agentic AI Roadmap</h3>
+      <p>A simple roadmap covering how AI systems are evolving from chatbots into agents, multi-agent teams, swarms, and autonomous workers. Built to make agentic AI easy to understand for beginners while still being useful for builders.</p>
+      <div class="hero-actions">
+        <a href="https://lnkd.in/gxPsuUdR" target="_blank" rel="noopener" class="btn btn-primary">View on LinkedIn</a>
+        <a href="https://jlaiii.github.io" target="_blank" rel="noopener" class="btn btn-outline">Live Site</a>
+      </div>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Populated via JS -->
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <div class="edu-period">Mar 2015 &mdash; Jan 2018</div>
+        <h3>Bachelor of Applied Technology</h3>
+        <p class="edu-school">South Texas College</p>
+        <p>Computer and Information Technologies. Coursework in IT support, Windows operating systems, networking fundamentals, cybersecurity basics, hardware diagnostics, software installation, troubleshooting, and technical documentation.</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-period">Jan 2024</div>
+        <h3>NCCER Pipefitter Certification</h3>
+        <p class="edu-school">NCCER</p>
+        <p>Industrial pipefitting fundamentals, job site safety, piping systems, tools, measurements, blueprint reading, layout, material preparation, and installation support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="container">
+    <div class="footer-cta reveal">
+      Let's build something.<br>
+      <a href="mailto:jay@example.com">Get in touch</a>
+    </div>
+    <div class="footer-links reveal">
+      <a href="https://www.linkedin.com/in/jose-luis-alvarez-iii-9809a2171/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+      <a href="https://github.com/jlaiii" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+      <a href="mailto:jay@example.com" class="btn btn-primary">Email</a>
+    </div>
+    <p class="copyright">&copy; <span id="year"></span> Jose (Jay) Luis Alvarez III. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    menuToggle.innerHTML = navLinks.classList.contains('open') ? '&times;' : '&#9776;';
+  });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinkEls = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (scrollY >= sectionTop) current = section.getAttribute('id');
+    });
+    navLinkEls.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Stat counter animation
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1200;
+        const start = performance.now();
+        const animate = (now) => {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased) + suffix;
+          if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+        statObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-value[data-target]').forEach(el => statObserver.observe(el));
+
+  // GitHub stats
+  async function loadGitHubStats() {
+    try {
+      const res = await fetch('https://api.github.com/users/jlaiii');
+      if (!res.ok) return;
+      const data = await res.json();
+      const reposEl = document.getElementById('ghRepos');
+      const starsEl = document.getElementById('ghStars');
+      if (reposEl) { reposEl.dataset.target = data.public_repos; statObserver.observe(reposEl); }
+      const starredRes = await fetch('https://api.github.com/users/jlaiii/repos?per_page=100');
+      if (starredRes.ok) {
+        const repos = await starredRes.json();
+        const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+        if (starsEl) { starsEl.dataset.target = totalStars; statObserver.observe(starsEl); }
+      }
+    } catch (e) {}
+  }
+  loadGitHubStats();
+
+  // Fetch repos for project grid
+  async function loadProjects() {
+    const grid = document.getElementById('projectsGrid');
+    if (!grid) return;
+    try {
+      const res = await fetch('https://api.github.com/users/jlaiii/repos?sort=updated&per_page=12');
+      if (!res.ok) return;
+      const repos = await res.json();
+      grid.innerHTML = repos.map(repo => {
+        const lang = repo.language ? `<span>${repo.language}</span>` : '';
+        const stars = repo.stargazers_count > 0 ? `<span>&#9733; ${repo.stargazers_count}</span>` : '';
+        return `<div class="project-card reveal">
+          <div class="project-tag">${repo.language || 'Repository'}</div>
+          <h3>${repo.name}</h3>
+          <p>${repo.description || 'No description available.'}</p>
+          <div class="project-meta">${lang}${stars}<span>Updated ${new Date(repo.updated_at).toLocaleDateString()}</span></div>
+          <div class="project-actions">
+            <a href="${repo.html_url}" target="_blank" rel="noopener">View Code</a>
+            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" rel="noopener">Live Demo</a>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      document.querySelectorAll('#projectsGrid .reveal').forEach(el => revealObserver.observe(el));
+    } catch (e) {
+      grid.innerHTML = '<p style="color:var(--text-3);text-align:center;">Unable to load repositories. Visit <a href="https://github.com/jlaiii">github.com/jlaiii</a>.</p>';
+    }
+  }
+  loadProjects();
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
