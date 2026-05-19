@@ -141,6 +141,14 @@
     .project-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
     .top-projects-label { font-size: 0.78rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .top-projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+    .sort-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .sort-bar label { font-size: 0.82rem; color: var(--text-3); font-weight: 500; }
+    .sort-bar select {
+      background: var(--bg-2); color: var(--text); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 12px; font-size: 0.82rem; font-family: inherit;
+      cursor: pointer; outline: none; transition: border-color 0.2s;
+    }
+    .sort-bar select:hover, .sort-bar select:focus { border-color: var(--accent); }
     @media (max-width: 768px) { .top-projects-grid { grid-template-columns: 1fr; } }
     .project-card .project-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
     .project-card h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
@@ -430,6 +438,20 @@
 
     <div class="top-projects-label">Top 3 Most Starred</div>
     <div class="top-projects-grid" id="topProjects"></div>
+
+    <div class="sort-bar">
+      <label for="projectSort">Sort by:</label>
+      <select id="projectSort">
+        <option value="updated-desc">Last Updated (Newest)</option>
+        <option value="updated-asc">Last Updated (Oldest)</option>
+        <option value="stars-desc">Most Stars</option>
+        <option value="stars-asc">Least Stars</option>
+        <option value="name-asc">Name (A–Z)</option>
+        <option value="name-desc">Name (Z–A)</option>
+        <option value="created-desc">Created (Newest)</option>
+        <option value="created-asc">Created (Oldest)</option>
+      </select>
+    </div>
 
     <div class="projects-grid" id="projectsGrid">
     </div>
@@ -776,28 +798,59 @@
   }
   loadTopProjects();
 
+  function renderRepos(repos, grid) {
+    if (!repos.length) {
+      grid.innerHTML = '<p style="color:var(--text-3);text-align:center;">No repositories to display.</p>';
+      return;
+    }
+    grid.innerHTML = repos.map(repo => {
+      const lang = repo.language ? `<span>${repo.language}</span>` : '';
+      const stars = repo.stargazers_count > 0 ? `<span>&#9733; ${repo.stargazers_count}</span>` : '';
+      return `<div class="project-card reveal">
+        <div class="project-tag">${repo.language || 'Repository'}</div>
+        <h3>${repo.name}</h3>
+        <p>${repo.description || 'No description available.'}</p>
+        <div class="project-meta">${lang}${stars}<span>Updated ${new Date(repo.updated_at).toLocaleDateString()}</span></div>
+        <div class="project-actions">
+          <a href="${repo.html_url}" target="_blank" rel="noopener">View Code</a>
+          ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" rel="noopener">Live Demo</a>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+    document.querySelectorAll('#projectsGrid .reveal').forEach(el => revealObserver.observe(el));
+  }
+
+  function sortRepos(repos, mode) {
+    const sorted = [...repos];
+    switch (mode) {
+      case 'updated-desc':  return sorted.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      case 'updated-asc':   return sorted.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
+      case 'stars-desc':    return sorted.sort((a, b) => b.stargazers_count - a.stargazers_count);
+      case 'stars-asc':     return sorted.sort((a, b) => a.stargazers_count - b.stargazers_count);
+      case 'name-asc':      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name-desc':     return sorted.sort((a, b) => b.name.localeCompare(a.name));
+      case 'created-desc':  return sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      case 'created-asc':   return sorted.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      default: return sorted;
+    }
+  }
+
   async function loadProjects() {
     const grid = document.getElementById('projectsGrid');
+    const sortSelect = document.getElementById('projectSort');
     if (!grid) return;
     try {
-      const res = await fetch('https://api.github.com/users/jlaiii/repos?sort=updated&per_page=12');
+      const res = await fetch('https://api.github.com/users/jlaiii/repos?per_page=100');
       if (!res.ok) return;
       const repos = await res.json();
-      grid.innerHTML = repos.map(repo => {
-        const lang = repo.language ? `<span>${repo.language}</span>` : '';
-        const stars = repo.stargazers_count > 0 ? `<span>&#9733; ${repo.stargazers_count}</span>` : '';
-        return `<div class="project-card reveal">
-          <div class="project-tag">${repo.language || 'Repository'}</div>
-          <h3>${repo.name}</h3>
-          <p>${repo.description || 'No description available.'}</p>
-          <div class="project-meta">${lang}${stars}<span>Updated ${new Date(repo.updated_at).toLocaleDateString()}</span></div>
-          <div class="project-actions">
-            <a href="${repo.html_url}" target="_blank" rel="noopener">View Code</a>
-            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" rel="noopener">Live Demo</a>` : ''}
-          </div>
-        </div>`;
-      }).join('');
-      document.querySelectorAll('#projectsGrid .reveal').forEach(el => revealObserver.observe(el));
+      let current = sortRepos(repos, sortSelect ? sortSelect.value : 'updated-desc');
+      renderRepos(current, grid);
+      if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+          current = sortRepos(repos, sortSelect.value);
+          renderRepos(current, grid);
+        });
+      }
     } catch (e) {
       grid.innerHTML = '<p style="color:var(--text-3);text-align:center;">Unable to load repositories. Visit <a href="https://github.com/jlaiii">github.com/jlaiii</a>.</p>';
     }
