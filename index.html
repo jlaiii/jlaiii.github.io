@@ -86,7 +86,17 @@
     .hero-inner { display: grid; grid-template-columns: 120px 1fr; gap: 32px; align-items: start; }
     .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-hover); }
     .hero-content h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 12px; }
-    .hero-content .subtitle { font-size: 1.05rem; color: var(--text-2); margin-bottom: 20px; font-weight: 400; }
+    .hero-content .subtitle { font-size: 1.05rem; color: var(--text-2); margin-bottom: 10px; font-weight: 400; }
+    .typing-wrapper { display: inline-block; margin-bottom: 18px; }
+    .typing-text {
+      font-size: 1.05rem; color: var(--accent); font-weight: 500;
+      overflow: hidden; white-space: nowrap; border-right: 2px solid var(--accent);
+      display: inline-block; max-width: 0;
+      animation: typing 2.5s steps(28, end) forwards, blink 0.75s step-end infinite;
+      animation-delay: 0.5s;
+    }
+    @keyframes typing { from { max-width: 0; } to { max-width: 400px; } }
+    @keyframes blink { 50% { border-color: transparent; } }
     .hero-content .meta { font-size: 0.82rem; color: var(--text-3); margin-bottom: 28px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
     .hero-content .meta span { display: flex; align-items: center; gap: 6px; }
     .hero-bio { color: var(--text-2); max-width: 640px; margin-bottom: 28px; }
@@ -209,10 +219,13 @@
 <section class="hero">
   <div class="container">
     <div class="hero-inner">
-      <img src="./avatar.jpg" alt="Jose (Jay) Luis Alvarez III" class="avatar">
+      <img src="https://i.imgur.com/q0zxWOf.jpeg" alt="Jose (Jay) Luis Alvarez III" class="avatar">
       <div class="hero-content">
         <h1>Jose (Jay) Luis Alvarez III</h1>
         <p class="subtitle">IT Support Specialist &amp; Technical Problem Solver</p>
+        <div class="typing-wrapper">
+          <span class="typing-text">Building tools with code &amp; AI.</span>
+        </div>
         <p class="meta">
           <span>Brownsville, TX</span>
           <span>12+ years experience</span>
