@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jose (Jay) Luis Alvarez III — IT Support Specialist</title>
   <meta name="description" content="IT Support Specialist with 12+ years in technical support, telecom troubleshooting, and hands-on industrial work. Brownsville, TX.">
+  <meta property="og:title" content="Jose (Jay) Luis Alvarez III — IT Support Specialist">
+  <meta property="og:description" content="IT Support Specialist with 12+ years in technical support, telecom troubleshooting, and hands-on industrial work. Open to work.">
+  <meta property="og:image" content="https://i.imgur.com/q0zxWOf.jpeg">
+  <meta property="og:url" content="https://jlaiii.github.io">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jose (Jay) Luis Alvarez III — IT Support Specialist">
+  <meta name="twitter:description" content="IT Support Specialist with 12+ years in technical support, telecom troubleshooting, and hands-on industrial work. Open to work.">
+  <meta name="twitter:image" content="https://i.imgur.com/q0zxWOf.jpeg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -283,12 +292,58 @@
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
     }
+
+    /* Noise grain overlay */
+    .grain {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 200px 200px;
+      animation: grainShift 0.5s steps(1) infinite;
+    }
+    @keyframes grainShift { 0% { transform: translate(0,0); } 20% { transform: translate(-2%,-2%); } 40% { transform: translate(2%,-1%); } 60% { transform: translate(-1%,2%); } 80% { transform: translate(1%,1%); } 100% { transform: translate(0,0); } }
+
+    /* Availability pulse */
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent-faint); border: 1px solid rgba(46,160,67,0.3);
+      color: #3fb950; padding: 4px 12px; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 600; margin-left: 8px; vertical-align: middle;
+    }
+    .avail-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #3fb950;
+      animation: availPulse 2s ease-in-out infinite;
+    }
+    @keyframes availPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+
+    /* Project search */
+    .project-search {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+      background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px;
+      padding: 8px 14px; max-width: 360px;
+    }
+    .project-search svg { width: 16px; height: 16px; color: var(--text-3); flex-shrink: 0; }
+    .project-search input {
+      background: transparent; border: none; color: var(--text); font-family: inherit; font-size: 0.85rem;
+      outline: none; width: 100%; padding: 0;
+    }
+    .project-search input::placeholder { color: var(--text-3); }
+    .project-search:focus-within { border-color: var(--accent); }
+
+    /* Toast notification */
+    .toast {
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--bg-2); border: 1px solid var(--border); color: var(--text);
+      padding: 10px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 500;
+      z-index: 102; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
 
 <canvas id="bgCanvas"></canvas>
 
+<div class="grain"></div>
 <div class="layer">
 <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -318,7 +373,7 @@
         <p class="meta">
           <span>Brownsville, TX</span>
           <span>12+ years experience</span>
-          <span>Open to work</span>
+          <span>Open to work<span class="avail-badge"><span class="avail-dot"></span>Hiring</span></span>
         </p>
         <p class="hero-bio">
           IT Support Specialist with a background in technical support, telecom troubleshooting, and hands-on industrial work. Experienced with Windows systems, ticket documentation, network testing, equipment checks, pipefitting, scaffolding support, safety procedures, and practical problem-solving.
@@ -532,6 +587,11 @@
     <div class="top-projects-label">Top 3 Most Starred</div>
     <div class="top-projects-grid" id="topProjects"></div>
 
+    <div class="project-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="projectSearch" placeholder="Search projects...">
+    </div>
+
     <div class="lang-filters" id="langFilters"></div>
 
     <div class="sort-bar">
@@ -590,6 +650,8 @@
     <p class="copyright">&copy; <span id="year"></span> Jose (Jay) Luis Alvarez III. All rights reserved.</p>
   </div>
 </footer>
+
+<div class="toast" id="toast">Copied to clipboard</div>
 
 <button class="back-to-top" id="backToTop" aria-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -974,10 +1036,27 @@
     }
   }
 
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = el.getAttribute('href').replace('mailto:', '');
+      navigator.clipboard.writeText(email).then(() => showToast('Email copied to clipboard'));
+    });
+  });
+
   async function loadProjects() {
     const grid = document.getElementById('projectsGrid');
     const sortSelect = document.getElementById('projectSort');
     const langContainer = document.getElementById('langFilters');
+    const searchInput = document.getElementById('projectSearch');
     if (!grid) return;
     try {
       const res = await fetch('https://api.github.com/users/jlaiii/repos?per_page=100');
@@ -986,9 +1065,18 @@
       const allLangs = [...new Set(repos.map(r => r.language).filter(Boolean))].sort();
       let activeLang = 'All';
       let currentSort = sortSelect ? sortSelect.value : 'updated-desc';
+      let searchQuery = '';
 
       function apply() {
-        let filtered = activeLang === 'All' ? repos : repos.filter(r => r.language === activeLang);
+        let filtered = repos;
+        if (activeLang !== 'All') filtered = filtered.filter(r => r.language === activeLang);
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase();
+          filtered = filtered.filter(r =>
+            (r.name || '').toLowerCase().includes(q) ||
+            (r.description || '').toLowerCase().includes(q)
+          );
+        }
         let sorted = sortRepos(filtered, currentSort);
         renderRepos(sorted, grid);
       }
@@ -1008,6 +1096,13 @@
           });
         }
         buildLangChips();
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          searchQuery = searchInput.value;
+          apply();
+        });
       }
 
       apply();
