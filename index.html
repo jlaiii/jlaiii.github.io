@@ -181,8 +181,49 @@
     .copyright { font-size: 0.78rem; color: var(--text-3); }
 
     /* Reveal animations */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(24px) scale(0.96); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Scroll Progress Bar */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      z-index: 101; transition: width 0.1s linear;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Staggered reveal delays */
+    .stats-strip > .stat-cell:nth-child(1) { transition-delay: 0s; }
+    .stats-strip > .stat-cell:nth-child(2) { transition-delay: 0.1s; }
+    .stats-strip > .stat-cell:nth-child(3) { transition-delay: 0.2s; }
+    .stats-strip > .stat-cell:nth-child(4) { transition-delay: 0.3s; }
+
+    .edu-grid > .edu-card:nth-child(1) { transition-delay: 0s; }
+    .edu-grid > .edu-card:nth-child(2) { transition-delay: 0.15s; }
+
+    .exp-list > .reveal:nth-child(1) { transition-delay: 0s; }
+    .exp-list > .reveal:nth-child(2) { transition-delay: 0.08s; }
+    .exp-list > .reveal:nth-child(3) { transition-delay: 0.16s; }
+    .exp-list > .reveal:nth-child(4) { transition-delay: 0.24s; }
+    .exp-list > .reveal:nth-child(5) { transition-delay: 0.32s; }
+    .exp-list > .reveal:nth-child(6) { transition-delay: 0.40s; }
+
+    .projects-grid > .reveal:nth-child(1) { transition-delay: 0s; }
+    .projects-grid > .reveal:nth-child(2) { transition-delay: 0.08s; }
+    .projects-grid > .reveal:nth-child(3) { transition-delay: 0.16s; }
+    .projects-grid > .reveal:nth-child(4) { transition-delay: 0.24s; }
+    .projects-grid > .reveal:nth-child(5) { transition-delay: 0.32s; }
+    .projects-grid > .reveal:nth-child(6) { transition-delay: 0.40s; }
+    .projects-grid > .reveal:nth-child(7) { transition-delay: 0.48s; }
+    .projects-grid > .reveal:nth-child(8) { transition-delay: 0.56s; }
+    .projects-grid > .reveal:nth-child(9) { transition-delay: 0.64s; }
+    .projects-grid > .reveal:nth-child(10) { transition-delay: 0.72s; }
+    .projects-grid > .reveal:nth-child(11) { transition-delay: 0.80s; }
+    .projects-grid > .reveal:nth-child(12) { transition-delay: 0.88s; }
+
+    .top-projects-grid > .reveal:nth-child(1) { transition-delay: 0s; }
+    .top-projects-grid > .reveal:nth-child(2) { transition-delay: 0.1s; }
+    .top-projects-grid > .reveal:nth-child(3) { transition-delay: 0.2s; }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -210,6 +251,7 @@
 <canvas id="bgCanvas"></canvas>
 
 <div class="layer">
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <nav>
   <div class="nav-inner">
@@ -250,20 +292,20 @@
       </div>
     </div>
 
-    <div class="stats-strip reveal">
-      <div class="stat-cell">
+    <div class="stats-strip">
+      <div class="stat-cell reveal">
         <div class="stat-value" data-target="51" data-suffix="+">0</div>
         <div class="stat-label">Connections</div>
       </div>
-      <div class="stat-cell">
+      <div class="stat-cell reveal">
         <div class="stat-value" data-target="12" data-suffix="+">0</div>
         <div class="stat-label">Years Experience</div>
       </div>
-      <div class="stat-cell">
+      <div class="stat-cell reveal">
         <div class="stat-value" data-target="0" id="ghRepos">0</div>
         <div class="stat-label">Repositories</div>
       </div>
-      <div class="stat-cell">
+      <div class="stat-cell reveal">
         <div class="stat-value" data-target="0" id="ghStars">0</div>
         <div class="stat-label">GitHub Stars</div>
       </div>
@@ -464,14 +506,14 @@
       <span class="section-num">04</span>
       <h2>Education</h2>
     </div>
-    <div class="edu-grid reveal">
-      <div class="edu-card">
+    <div class="edu-grid">
+      <div class="edu-card reveal">
         <div class="edu-period">Mar 2015 &mdash; Jan 2018</div>
         <h3>Bachelor of Applied Technology</h3>
         <p class="edu-school">South Texas College</p>
         <p>Computer and Information Technologies. Coursework in IT support, Windows operating systems, networking fundamentals, cybersecurity basics, hardware diagnostics, software installation, troubleshooting, and technical documentation.</p>
       </div>
-      <div class="edu-card">
+      <div class="edu-card reveal">
         <div class="edu-period">Jan 2024</div>
         <h3>NCCER Pipefitter Certification</h3>
         <p class="edu-school">NCCER</p>
@@ -498,7 +540,19 @@
 
 </div><!-- .layer -->
 
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
+  // ================================
+  // Lenis Smooth Scroll
+  // ================================
+  const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  lenis.on('scroll', (e) => {
+    const bar = document.getElementById('scrollProgress');
+    if (bar) bar.style.width = (e.progress * 100) + '%';
+  });
+
   // ================================
   // 3D Interactive Particle System
   // ================================
