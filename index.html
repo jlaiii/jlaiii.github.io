@@ -87,16 +87,14 @@
     .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-hover); }
     .hero-content h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 12px; }
     .hero-content .subtitle { font-size: 1.05rem; color: var(--text-2); margin-bottom: 10px; font-weight: 400; }
-    .typing-wrapper { display: inline-block; margin-bottom: 18px; }
-    .typing-text {
-      font-size: 1.05rem; color: var(--accent); font-weight: 500;
-      overflow: hidden; white-space: nowrap; border-right: 2px solid var(--accent);
-      display: inline-block; max-width: 0;
-      animation: typing 2.5s steps(28, end) forwards, blink 0.75s step-end infinite;
-      animation-delay: 0.5s;
+    .typing-wrapper { display: inline-block; margin-bottom: 18px; font-size: 1.05rem; color: var(--accent); font-weight: 500; }
+    .typing-text { white-space: nowrap; }
+    .typing-cursor {
+      display: inline-block; width: 2px; height: 1.1em; background: var(--accent);
+      vertical-align: text-bottom; margin-left: 2px;
+      animation: blinkCursor 0.75s step-end infinite;
     }
-    @keyframes typing { from { max-width: 0; } to { max-width: 400px; } }
-    @keyframes blink { 50% { border-color: transparent; } }
+    @keyframes blinkCursor { 50% { opacity: 0; } }
     .hero-content .meta { font-size: 0.82rem; color: var(--text-3); margin-bottom: 28px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
     .hero-content .meta span { display: flex; align-items: center; gap: 6px; }
     .hero-bio { color: var(--text-2); max-width: 640px; margin-bottom: 28px; }
@@ -224,7 +222,7 @@
         <h1>Jose (Jay) Luis Alvarez III</h1>
         <p class="subtitle">IT Support Specialist &amp; Technical Problem Solver</p>
         <div class="typing-wrapper">
-          <span class="typing-text">Building tools with code &amp; AI.</span>
+          <span class="typing-text" id="typingText"></span><span class="typing-cursor"></span>
         </div>
         <p class="meta">
           <span>Brownsville, TX</span>
@@ -754,6 +752,78 @@
     }
   }
   loadProjects();
+
+  // ================================
+  // Typing Effect
+  // ================================
+  (function() {
+    const phrases = [
+      "IT Support Specialist & Technical Problem Solver",
+      "Windows Troubleshooting Expert",
+      "Hardware Diagnostics Pro",
+      "Network Configuration Specialist",
+      "Linux Systems Support",
+      "Android & iOS Troubleshooter",
+      "Pipefitting Professional",
+      "Industrial Safety Certified",
+      "Media Editor & Producer",
+      "Video Content Creator",
+      "Remote Technical Support",
+      "Router & Modem Configuration",
+      "Computer Repair Specialist",
+      "System Cleanup & Optimization",
+      "Software Installation Expert",
+      "SSH & Terminal User",
+      "Blueprint Reading Specialist",
+      "Scaffolding Operations Support",
+      "NCCER Certified Pipefitter",
+      "Telecom Troubleshooting Expert",
+      "Ticket Documentation Pro",
+      "Mobile Device Repair",
+      "Wi-Fi & Connectivity Troubleshooter",
+      "OS Reinstall Specialist",
+      "Data Backup & Recovery",
+      "Industrial Construction Support",
+      "Field & Office IT Support",
+      "Promotional Content Editor",
+      "Gaming Highlight Editor",
+      "Motion Graphics & VFX"
+    ];
+    const el = document.getElementById('typingText');
+    if (!el) return;
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typeSpeed = 70;
+    const deleteSpeed = 40;
+    const pauseAfterType = 2200;
+    const pauseAfterDelete = 400;
+
+    function tick() {
+      const current = phrases[phraseIndex];
+      if (isDeleting) {
+        charIndex--;
+        el.textContent = current.substring(0, charIndex);
+        if (charIndex <= 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(tick, pauseAfterDelete);
+          return;
+        }
+        setTimeout(tick, deleteSpeed);
+      } else {
+        charIndex++;
+        el.textContent = current.substring(0, charIndex);
+        if (charIndex >= current.length) {
+          isDeleting = true;
+          setTimeout(tick, pauseAfterType);
+          return;
+        }
+        setTimeout(tick, typeSpeed);
+      }
+    }
+    tick();
+  })();
 
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
