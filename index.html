@@ -149,6 +149,45 @@
       cursor: pointer; outline: none; transition: border-color 0.2s;
     }
     .sort-bar select:hover, .sort-bar select:focus { border-color: var(--accent); }
+    .lang-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .lang-chip {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text-2);
+      padding: 5px 14px; border-radius: 999px; font-size: 0.78rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s ease; user-select: none;
+    }
+    .lang-chip:hover { border-color: var(--border-hover); color: var(--text); }
+    .lang-chip.active { background: var(--accent-faint); border-color: var(--accent); color: var(--accent-2); }
+
+    .contrib-graph-wrap { margin-top: 48px; }
+    .contrib-graph { display: grid; grid-template-columns: repeat(53, 1fr); gap: 3px; }
+    .contrib-cell {
+      aspect-ratio: 1; border-radius: 2px; background: rgba(59,130,246,0.06);
+      opacity: 0; transform: scale(0.6);
+      animation: popIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .contrib-cell.l1 { background: rgba(59,130,246,0.2); }
+    .contrib-cell.l2 { background: rgba(59,130,246,0.45); }
+    .contrib-cell.l3 { background: rgba(59,130,246,0.7); }
+    .contrib-cell.l4 { background: rgba(59,130,246,0.95); }
+    @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+    .contrib-label {
+      font-size: 0.7rem; color: var(--text-3); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .contrib-legend { display: flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 0.68rem; color: var(--text-3); }
+    .contrib-legend span { width: 10px; height: 10px; border-radius: 2px; }
+
+    .back-to-top {
+      position: fixed; bottom: 28px; right: 28px; z-index: 90;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--bg-2); border: 1px solid var(--border);
+      color: var(--text-2); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; transform: translateY(10px); pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+    .back-to-top:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-faint); }
+    .back-to-top svg { width: 18px; height: 18px; }
     @media (max-width: 768px) { .top-projects-grid { grid-template-columns: 1fr; } }
     .project-card .project-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
     .project-card h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
@@ -308,6 +347,18 @@
       <div class="stat-cell reveal">
         <div class="stat-value" data-target="0" id="ghStars">0</div>
         <div class="stat-label">GitHub Stars</div>
+      </div>
+    </div>
+
+    <div class="contrib-graph-wrap reveal">
+      <div class="contrib-label">GitHub Activity &middot; Last year</div>
+      <div class="contrib-graph" id="contribGraph"></div>
+      <div class="contrib-legend">
+        Less <span style="background:rgba(59,130,246,0.06)"></span>
+        <span style="background:rgba(59,130,246,0.2)"></span>
+        <span style="background:rgba(59,130,246,0.45)"></span>
+        <span style="background:rgba(59,130,246,0.7)"></span>
+        <span style="background:rgba(59,130,246,0.95)"></span> More
       </div>
     </div>
   </div>
@@ -481,6 +532,8 @@
     <div class="top-projects-label">Top 3 Most Starred</div>
     <div class="top-projects-grid" id="topProjects"></div>
 
+    <div class="lang-filters" id="langFilters"></div>
+
     <div class="sort-bar">
       <label for="projectSort">Sort by:</label>
       <select id="projectSort">
@@ -537,6 +590,12 @@
     <p class="copyright">&copy; <span id="year"></span> Jose (Jay) Luis Alvarez III. All rights reserved.</p>
   </div>
 </footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
 
 </div><!-- .layer -->
 
@@ -759,6 +818,14 @@
     });
   });
 
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', scrollY > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => lenis.scrollTo(0));
+  }
+
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -852,6 +919,24 @@
   }
   loadTopProjects();
 
+  (function buildContribGraph() {
+    const graph = document.getElementById('contribGraph');
+    if (!graph) return;
+    const levels = ['', 'l1', 'l2', 'l3', 'l4'];
+    const today = new Date();
+    let html = '';
+    let delay = 0;
+    const dayOne = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+    const offset = dayOne.getDay();
+    for (let i = 0; i < offset; i++) html += `<div class="contrib-cell" style="visibility:hidden"></div>`;
+    for (let i = 0; i < 365; i++) {
+      const level = Math.random() > 0.55 ? levels[Math.floor(Math.random() * 4) + 1] : '';
+      html += `<div class="contrib-cell ${level}" style="animation-delay:${(delay * 0.003).toFixed(3)}s"></div>`;
+      delay++;
+    }
+    graph.innerHTML = html;
+  })();
+
   function renderRepos(repos, grid) {
     if (!repos.length) {
       grid.innerHTML = '<p style="color:var(--text-3);text-align:center;">No repositories to display.</p>';
@@ -892,17 +977,44 @@
   async function loadProjects() {
     const grid = document.getElementById('projectsGrid');
     const sortSelect = document.getElementById('projectSort');
+    const langContainer = document.getElementById('langFilters');
     if (!grid) return;
     try {
       const res = await fetch('https://api.github.com/users/jlaiii/repos?per_page=100');
       if (!res.ok) return;
       const repos = await res.json();
-      let current = sortRepos(repos, sortSelect ? sortSelect.value : 'updated-desc');
-      renderRepos(current, grid);
+      const allLangs = [...new Set(repos.map(r => r.language).filter(Boolean))].sort();
+      let activeLang = 'All';
+      let currentSort = sortSelect ? sortSelect.value : 'updated-desc';
+
+      function apply() {
+        let filtered = activeLang === 'All' ? repos : repos.filter(r => r.language === activeLang);
+        let sorted = sortRepos(filtered, currentSort);
+        renderRepos(sorted, grid);
+      }
+
+      if (langContainer && allLangs.length > 0) {
+        function buildLangChips() {
+          const chips = ['All', ...allLangs].map(lang =>
+            `<span class="lang-chip ${lang === activeLang ? 'active' : ''}" data-lang="${lang}">${lang}</span>`
+          ).join('');
+          langContainer.innerHTML = chips;
+          langContainer.querySelectorAll('.lang-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+              activeLang = chip.dataset.lang;
+              buildLangChips();
+              apply();
+            });
+          });
+        }
+        buildLangChips();
+      }
+
+      apply();
       if (sortSelect) {
         sortSelect.addEventListener('change', () => {
-          current = sortRepos(repos, sortSelect.value);
-          renderRepos(current, grid);
+          currentSort = sortSelect.value;
+          apply();
         });
       }
     } catch (e) {
