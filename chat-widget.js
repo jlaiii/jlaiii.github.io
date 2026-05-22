@@ -1,8 +1,8 @@
 (function() {
   'use strict';
 
-  const BACKEND_URL = 'http://65.75.202.18:8001';
-  const AUTO_OPEN_DELAY = 5000; // ms — auto opens panel with welcome message
+  const BACKEND_URL = 'https://65.75.202.18/chatbot';
+  const AUTO_OPEN_DELAY = 10000; // ms — auto opens panel with welcome message
   const POLL_INTERVAL = 2000; // ms for live chat polling
 
   // ----- State -----
@@ -373,7 +373,6 @@
     const backBtn = get('jc-back-btn');
     const sendBtn = get('jc-send');
     const input = get('jc-input');
-    const toastClose = get('jc-toast-close');
 
     // FAB click — toggle panel
     fab.addEventListener('click', function(e) {
