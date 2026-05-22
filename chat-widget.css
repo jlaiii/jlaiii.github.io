@@ -46,45 +46,6 @@
   box-shadow: 0 6px 28px rgba(59,130,246,0.5);
 }
 
-/* Auto-toast */
-#jc-toast {
-  position: fixed;
-  bottom: 92px;
-  right: 24px;
-  z-index: 2147483646;
-  background: var(--jc-surface);
-  border: 1px solid var(--jc-border);
-  border-radius: var(--jc-radius);
-  padding: 14px 20px;
-  max-width: 320px;
-  color: var(--jc-text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
-  box-shadow: var(--jc-shadow);
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s, transform 0.5s;
-  pointer-events: none;
-}
-#jc-toast.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-#jc-toast-close {
-  float: right;
-  background: none;
-  border: none;
-  color: var(--jc-text-3);
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0 0 0 10px;
-  line-height: 1.2;
-}
-#jc-toast-close:hover { color: var(--jc-text); }
-
 /* Chat panel */
 #jc-panel {
   position: fixed;

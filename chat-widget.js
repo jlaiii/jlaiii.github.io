@@ -2,7 +2,7 @@
   'use strict';
 
   const BACKEND_URL = 'http://65.75.202.18:8001';
-  const AUTO_TRIGGER_DELAY = 8000; // ms
+  const AUTO_OPEN_DELAY = 5000; // ms — auto opens panel with welcome message
   const POLL_INTERVAL = 2000; // ms for live chat polling
 
   // ----- State -----
@@ -35,12 +35,6 @@
     fab.innerHTML = '💬';
     fab.title = 'Chat with Jay\'s AI assistant';
     container.appendChild(fab);
-
-    // Toast
-    const toast = document.createElement('div');
-    toast.id = 'jc-toast';
-    toast.innerHTML = '<button id="jc-toast-close">✕</button><div>👋 <strong>Hey, I\'m Jay\'s AI assistant!</strong><br>Ask me anything about Jay, his skills, or how to hire him.</div>';
-    container.appendChild(toast);
 
     // Panel
     const panel = document.createElement('div');
@@ -104,7 +98,9 @@
   function addMessage(text, type) {
     const el = document.createElement('div');
     el.className = 'jc-msg jc-' + type;
-    el.textContent = text;
+    // Convert **bold** markers to <strong> for Telegram-style markdown
+    const formatted = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    el.innerHTML = formatted;
     get('jc-messages').appendChild(el);
     get('jc-messages').scrollTop = get('jc-messages').scrollHeight;
   }
@@ -372,7 +368,6 @@
   // ----- Event listeners -----
   function initEvents() {
     const fab = get('jc-fab');
-    const toast = get('jc-toast');
     const panel = get('jc-panel');
     const minimizeBtn = get('jc-minimize-btn');
     const backBtn = get('jc-back-btn');
@@ -380,36 +375,30 @@
     const input = get('jc-input');
     const toastClose = get('jc-toast-close');
 
-    // FAB click
+    // FAB click — toggle panel
     fab.addEventListener('click', function(e) {
       panelOpen = !panelOpen;
       panel.classList.toggle('open', panelOpen);
       fab.innerHTML = panelOpen ? '✕' : '💬';
-      toast.classList.remove('show');
       if (panelOpen) {
         get('jc-input').focus();
       }
     });
 
-    // Toast
-    toast.addEventListener('click', function() {
-      toast.classList.remove('show');
-      panelOpen = true;
-      panel.classList.add('open');
-      fab.innerHTML = '✕';
-      get('jc-input').focus();
-    });
-    toastClose.addEventListener('click', function(e) {
-      e.stopPropagation();
-      toast.classList.remove('show');
-    });
-
-    // Auto-trigger toast
+    // Auto-open panel after 5 seconds with welcome message
     setTimeout(function() {
       if (!panelOpen) {
-        toast.classList.add('show');
+        panelOpen = true;
+        panel.classList.add('open');
+        fab.innerHTML = '✕';
+
+        // Add welcome messages
+        addMessage('👋 Hey, I\'m **Jay\'s AI assistant**!', 'bot');
+        addMessage('I know everything about Jay — his skills, experience, projects. Ask me anything!', 'bot');
+        addMessage('💡 Want to hire him? Just say "connect me to Jay" for a live chat, or "contact Jay" to leave a message.', 'bot');
+        get('jc-input').focus();
       }
-    }, AUTO_TRIGGER_DELAY);
+    }, AUTO_OPEN_DELAY);
 
     // Minimize
     minimizeBtn.addEventListener('click', function() {
