@@ -380,11 +380,11 @@
         <div class="stat-label">Years Experience</div>
       </div>
       <div class="stat-cell reveal">
-        <div class="stat-value" data-target="0" id="ghRepos">0</div>
+        <div class="stat-value" data-target="76" id="ghRepos">76</div>
         <div class="stat-label">Repositories</div>
       </div>
       <div class="stat-cell reveal">
-        <div class="stat-value" data-target="0" id="ghStars">0</div>
+        <div class="stat-value" data-target="8" id="ghStars">8</div>
         <div class="stat-label">GitHub Stars</div>
       </div>
     </div>
@@ -916,13 +916,24 @@
 
   async function loadGitHubStats() {
     try {
-      const res = await fetch('stats.json');
+      const res = await fetch('https://api.github.com/users/jlaiii');
       if (!res.ok) return;
       const data = await res.json();
       const reposEl = document.getElementById('ghRepos');
       const starsEl = document.getElementById('ghStars');
-      if (reposEl) animateStat(reposEl, data.public_repos, '');
-      if (starsEl) animateStat(starsEl, data.total_stars, '');
+      if (reposEl) {
+        reposEl.dataset.target = data.public_repos;
+        animateStat(reposEl, data.public_repos, '');
+      }
+      const starredRes = await fetch('https://api.github.com/users/jlaiii/repos?per_page=100');
+      if (starredRes.ok) {
+        const repos = await starredRes.json();
+        const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+        if (starsEl) {
+          starsEl.dataset.target = totalStars;
+          animateStat(starsEl, totalStars, '');
+        }
+      }
     } catch (e) {}
   }
   loadGitHubStats();
