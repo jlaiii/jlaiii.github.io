@@ -916,18 +916,13 @@
 
   async function loadGitHubStats() {
     try {
-      const res = await fetch('https://api.github.com/users/jlaiii');
+      const res = await fetch('stats.json');
       if (!res.ok) return;
       const data = await res.json();
       const reposEl = document.getElementById('ghRepos');
       const starsEl = document.getElementById('ghStars');
       if (reposEl) animateStat(reposEl, data.public_repos, '');
-      const starredRes = await fetch('https://api.github.com/users/jlaiii/repos?per_page=100');
-      if (starredRes.ok) {
-        const repos = await starredRes.json();
-        const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
-        if (starsEl) animateStat(starsEl, totalStars, '');
-      }
+      if (starsEl) animateStat(starsEl, data.total_stars, '');
     } catch (e) {}
   }
   loadGitHubStats();
